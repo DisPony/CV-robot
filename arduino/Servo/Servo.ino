@@ -20,6 +20,7 @@ byte MIN_V_ANGLE = 0;
 byte DEFAULT_V_ANGLE = 0;
 
 void setup(){
+  Serial.begin(9600);
   servoHorizontal.attach(10);
   servoVertical.attach(11);
   servoHorizontal.write(DEFAULT_H_ANGLE);
@@ -51,7 +52,7 @@ void driveTest(){
 }
 
 // vertical [0..45] horizontal [0..180]
-void setPosition(byte vertical, byte horizontal){
+bool setPosition(byte vertical, byte horizontal){
   bool verticalCorrect = (vertical <= MAX_V_ANGLE && vertical >= MIN_V_ANGLE);
   bool horizontalCorrect = (horizontal <= MAX_H_ANGLE && horizontal >= MIN_H_ANGLE);
   if(verticalCorrect && horizontalCorrect){
@@ -60,8 +61,14 @@ void setPosition(byte vertical, byte horizontal){
   }
 }
 
-void setPositionTest(){
+void setPositionTest(byte vertical, byte horizontal){
+  if(setPosition(vertical, horizontal)){
+    Serial.write("Sucess");
+  } else {
+    Serial.write(vertical);
+    Serial.write(horizontal);
   }
+  delay(2000);
 }
 
 void loop(){
