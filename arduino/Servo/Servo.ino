@@ -72,8 +72,9 @@ void setPositionTest(byte vertical, byte horizontal){
 }
 
 void loop(){
-  driveTest();
-  
+  //driveTest();
+  setPositionTest(20, 120);
+  delay(2000);
 }
 
 
