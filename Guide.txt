@@ -1,0 +1,8 @@
+Folder "Arduino":
+Contains source C like codes for Arduino
+Folder "Schemes":
+Contains assembly schemes and list of used components
+Folder "Orange Pi":
+Contains Python programms to run on Orange Pi
+Folder "Workspace":
+Contains all necessary instruments (Or ways to install them)
