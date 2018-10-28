@@ -30,6 +30,64 @@ void setup(){
   delay(10000);
 }
 
+//------------------------------------------------------------------------//
+
+void setVerticalAngle(byte angle){
+  if(angle <= MAX_V_ANGLE && angle >= MIN_V_ANGLE){
+    servoVertical.write(angle);
+  }
+}
+
+void setHorizontalAngle(byte angle){
+  if(angle <= MAX_H_ANGLE && angle >= MIN_H_ANGLE){
+    servoHorizontal.write(angle);
+  }
+}
+
+void setPosition(byte vertical, byte horizontal){
+  setVerticalAngle(vertical);
+  setHorizontalAngle(horizontal);
+}
+
+void setPositionLazy(byte vertical, byte horizontal){
+  if(vertical != servoVertical.read()){
+    setVerticalAngle(vertical);
+    }  
+  if(horizontal != servoHorizontal.read()){
+    setHorizontalAngle(horizontal);
+  }
+}
+
+//------------------------------------------------------------------------//
+
+// angle may be negative as well
+void turnVertical(int angle){
+  if(angle == 0){
+    return;
+  }
+  byte angleBuf = servoVertical.read();
+  angleBuf += angle;
+  setVerticalAngle(angleBuf);
+}
+
+void turnHorizontal(int angle){
+  if(angle == 0){
+    return;
+  }
+  byte angleBuf = servoHorizontal.read();
+  angleBuf += angle;
+  setHorizontalAngle(angleBuf);
+}
+
+//------------------------------------------------------------------------//
+
+#define TEST
+
+void setPositionTest(byte vertical, byte horizontal){
+  setPositionLazy(vertical, horizontal);
+  delay(2000);
+}
+
 /*
  * Expect:
  * 0. servoVertical turn right as possible
@@ -55,68 +113,12 @@ void driveTest(){
 
 //------------------------------------------------------------------------//
 
-void setVerticalAngle(byte angle){
-  if(angle <= MAX_V_ANGLE && angle >= MIN_V_ANGLE){
-    servoVertical.write(angle)
-  }
-}
-
-void setHorizontalAngle(byte angle){
-  if(angle <= MAX_H_ANGLE && angle >= MIN_H_ANGLE){
-    servoHorizontal.write(angle)
-  }
-}
-
-void setPosition(byte vertical, byte horizontal){
-  setVerticalAngle(vertical);
-  setHorizontalAngle(horizontal);
-}
-
-void setPositionLazy(byte vertical, byte horizontal){
-  if(vertical != servoVertical.read()){
-    setVerticalAngle(vertical);
-    }  
-  if(horizontal != servoHorizontal.read()){
-    setHorizontalAngle(horizontal);
-  }
-}
-
-// angle may be negative as well
-void turnVertical(int angle){
-  if(angle == 0){
-    return;
-  }
-  byte angleBuf = servoVertical.read();
-  angleBuf += angle;
-  setVerticalAngle(angleBuf);
-}
-
-void turnHorizontal(int angle){
-  if(angle == 0){
-    return;
-  }
-  byte angleBuf = servoHorizontal.read();
-  angleBuf += angle;
-  setHorizontalAngle(angleBuf);
-}
-
-//------------------------------------------------------------------------//
-
-
-void setPositionTest(byte vertical, byte horizontal){
-  if(setPositionLazy(vertical, horizontal)){
-    Serial.write("Sucess");
-  } else {
-    Serial.write(vertical);
-    Serial.write(horizontal);
-  }
-  delay(2000);
-}
-
 void loop(){
-  driveTest();
-  setPositionTest(20, 120);
-  delay(2000);
+  #ifdef TEST
+    driveTest();
+    setPositionTest(20, 120);
+  #endif
+  
 }
 
 
