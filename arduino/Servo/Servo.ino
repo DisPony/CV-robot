@@ -1,10 +1,12 @@
 #include <Servo.h>
 
-/* 1: Turn camera left and right [0; 180]
+
+
+/* 1: Turn camera left and right [MIN_H_ANGLE; MAX_H_ANGLE]
  *  0 - right
  * 90 - forward
  * 180 - left
- * 2: Turn camera up and down [0; 90]
+ * 2: Turn camera up and down [MIN_V_ANGLE; MAX_V_ANGLE]
  * 0: - forward
  * 90 - straight down
  * >90 - doesn't make sence due to physical barrier
@@ -51,18 +53,43 @@ void driveTest(){
     servoVertical.write(DEFAULT_V_ANGLE);
 }
 
-// vertical [0..45] horizontal [0..180]
-bool setPosition(byte vertical, byte horizontal){
-  bool verticalCorrect = (vertical <= MAX_V_ANGLE && vertical >= MIN_V_ANGLE);
-  bool horizontalCorrect = (horizontal <= MAX_H_ANGLE && horizontal >= MIN_H_ANGLE);
-  if(verticalCorrect && horizontalCorrect){
-    servoVertical.write(vertical);
-    servoHorizontal.write(horizontal);
+//------------------------------------------------------------------------//
+
+void setVerticalAngle(byte angle){
+  if(angle <= MAX_V_ANGLE && angle >= MIN_V_ANGLE){
+    servoVertical.write(angle)
   }
 }
 
+void setHorizontalAngle(byte angle){
+  if(angle <= MAX_H_ANGLE && angle >= MIN_H_ANGLE){
+    servoHorizontal.write(angle)
+  }
+}
+
+void setPosition(byte vertical, byte horizontal){
+  setVerticalAngle(vertical);
+  setHorizontalAngle(horizontal);
+}
+
+void setPositionLazy(byte vertical, byte horizontal){
+  if(vertical != servoVertical.read()){
+    setVerticalAngle(vertical);
+    }  
+  if(horizontal != servoHorizontal.read()){
+    setHorizontalAngle(horizontal);
+  }
+}
+
+void turnVertical(int angle){
+  
+}
+
+//------------------------------------------------------------------------//
+
+
 void setPositionTest(byte vertical, byte horizontal){
-  if(setPosition(vertical, horizontal)){
+  if(setPositionLazy(vertical, horizontal)){
     Serial.write("Sucess");
   } else {
     Serial.write(vertical);
@@ -72,7 +99,7 @@ void setPositionTest(byte vertical, byte horizontal){
 }
 
 void loop(){
-  //driveTest();
+  driveTest();
   setPositionTest(20, 120);
   delay(2000);
 }
