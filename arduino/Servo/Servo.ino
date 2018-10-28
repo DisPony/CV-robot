@@ -115,10 +115,10 @@ void driveTest(){
 //------------------------------------------------------------------------//
 
 void loop(){
-  #ifdef LOOPTEST
-    driveTest();
-    setPositionTest(20, 120);
-  #endif
+//  #ifdef LOOPTEST
+//    driveTest();
+//    setPositionTest(20, 120);
+//  #endif
   
 }
 
