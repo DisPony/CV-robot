@@ -1,6 +1,6 @@
 #include <Servo.h>
 
-
+//------------------------------------------------------------------------//
 
 /* 1: Turn camera left and right [MIN_H_ANGLE; MAX_H_ANGLE]
  *  0 - right
@@ -13,12 +13,13 @@
  */
 
 Servo servoHorizontal; /*1*/
-byte MAX_H_ANGLE = 180;
-byte MIN_H_ANGLE = 0;
+byte     MAX_H_ANGLE = 180;
+byte     MIN_H_ANGLE = 0;
 byte DEFAULT_H_ANGLE = 90;
+
 Servo servoVertical; /*2*/
-byte MAX_V_ANGLE = 45;
-byte MIN_V_ANGLE = 0;
+byte     MAX_V_ANGLE = 45;
+byte     MIN_V_ANGLE = 0;
 byte DEFAULT_V_ANGLE = 0;
 
 void setup(){
@@ -81,8 +82,7 @@ void turnHorizontal(int angle){
 
 //------------------------------------------------------------------------//
 
-//#define TEST
-//#define LOOPTEST
+#define LOOPTEST
 
 void setPositionTest(byte vertical, byte horizontal){
   setPositionLazy(vertical, horizontal);
@@ -115,10 +115,10 @@ void driveTest(){
 //------------------------------------------------------------------------//
 
 void loop(){
-//  #ifdef LOOPTEST
-//    driveTest();
-//    setPositionTest(20, 120);
-//  #endif
+#ifdef LOOPTEST
+    driveTest();
+    setPositionTest(20, 120);
+#endif
   
 }
 
