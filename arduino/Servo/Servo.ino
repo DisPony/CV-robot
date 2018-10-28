@@ -81,7 +81,8 @@ void turnHorizontal(int angle){
 
 //------------------------------------------------------------------------//
 
-#define TEST
+//#define TEST
+//#define LOOPTEST
 
 void setPositionTest(byte vertical, byte horizontal){
   setPositionLazy(vertical, horizontal);
@@ -105,7 +106,7 @@ void driveTest(){
     servoHorizontal.write(DEFAULT_H_ANGLE);
     for(byte i = MIN_V_ANGLE; i != MAX_V_ANGLE; i++){
       servoVertical.write(i);
-      delay(200);
+      delay(200); 
     }
     delay(3000);
     servoVertical.write(DEFAULT_V_ANGLE);
@@ -114,7 +115,7 @@ void driveTest(){
 //------------------------------------------------------------------------//
 
 void loop(){
-  #ifdef TEST
+  #ifdef LOOPTEST
     driveTest();
     setPositionTest(20, 120);
   #endif
