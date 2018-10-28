@@ -81,8 +81,23 @@ void setPositionLazy(byte vertical, byte horizontal){
   }
 }
 
+// angle may be negative as well
 void turnVertical(int angle){
-  
+  if(angle == 0){
+    return;
+  }
+  byte angleBuf = servoVertical.read();
+  angleBuf += angle;
+  setVerticalAngle(angleBuf);
+}
+
+void turnHorizontal(int angle){
+  if(angle == 0){
+    return;
+  }
+  byte angleBuf = servoHorizontal.read();
+  angleBuf += angle;
+  setHorizontalAngle(angleBuf);
 }
 
 //------------------------------------------------------------------------//
