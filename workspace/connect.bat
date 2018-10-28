@@ -1,0 +1,1 @@
+putty.exe -load "Orange Pi"
