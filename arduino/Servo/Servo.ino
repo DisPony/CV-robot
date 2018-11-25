@@ -120,17 +120,17 @@ int moveForward(float distance){
   int requiredStepsRight = distance / (2*Pi*RIGHT_WHEEL_RADIUS) * STEPS;
   
   while(requiredStepsLeft != 0 && requiredStepsRight !=0){
-    if(requiredStepsLeft > 20){
-      leftMotor.step(20);
-      requiredStepsLeft -= 20;
+    if(requiredStepsLeft > SINGLE_STEP){
+      leftMotor.step(SINGLE_STEP);
+      requiredStepsLeft -= SINGLE_STEP;
     } else {
       leftMotor.step(requiredStepsLeft);
       requiredStepsLeft = 0;
     }
 
-    if(requiredStepsRight > 20){
-      leftMotor.step(20);
-      requiredStepsRight -= 20;
+    if(requiredStepsRight > SINGLE_STEP){
+      leftMotor.step(SINGLE_STEP);
+      requiredStepsRight -= SINGLE_STEP;
     } else {
       leftMotor.step(requiredStepsRight);
       requiredStepsRight = 0;
