@@ -129,6 +129,7 @@ int moveForward(float distance){
   return 0;
 }
 */
+
 int moveForwardLeft(float distance){
   int requiredStepsLeft = distance / (2*Pi*LEFT_WHEEL_RADIUS) * STEPS;
   while(requiredStepsLeft != 0){
@@ -144,7 +145,8 @@ int moveForwardLeft(float distance){
 
 //------------------------------------------------------------------------//
 
-#define LOOPTEST
+//#define LOOPTEST
+#define MOVETEST
 
 void setPositionTest(byte vertical, byte horizontal){
   setPositionLazy(vertical, horizontal);
@@ -174,12 +176,20 @@ void driveTest(){
     servoVertical.write(DEFAULT_V_ANGLE);
 }
 
+void moveTest(int distance){
+  moveForwardLeft(distance);
+}
+
 //------------------------------------------------------------------------//
 
 void loop(){
 #ifdef LOOPTEST
-    driveTest();
-    setPositionTest(20, 120);
+  driveTest();
+  setPositionTest(20, 120);
+#endif
+
+#ifdef MOVETEST
+  moveTest(50);
 #endif
   
 }
