@@ -146,7 +146,7 @@ int moveForward(float distance){
 #define RIGHT_MOTOR 1
 #define LEFT_MOTOR 0
 int moveMotor(int motorNum, float distance){
-  Stepper_28BYJ motor;
+  Stepper_28BYJ motor(leftMotor);
   int direction = distance > 0? 1 : -1;
   int requiredStepsLeft;
 
