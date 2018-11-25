@@ -27,7 +27,7 @@ byte DEFAULT_V_ANGLE = 0;
 
 const float Pi = 3.1415;
 
-const int SINGLE_STEP = 100;
+const int SINGLE_STEP = 4078;
 
 float TO_RADIANS(float angle){
   return ((angle * Pi) / 180);
