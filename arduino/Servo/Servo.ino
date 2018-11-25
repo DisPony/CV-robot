@@ -44,10 +44,14 @@ float LEFT_WHEEL_RADIUS = 5;
 
 void setup(){
   Serial.begin(9600);
+
   servoHorizontal.attach(10);
   servoVertical.attach(11);
   servoHorizontal.write(DEFAULT_H_ANGLE);
   servoVertical.write(DEFAULT_V_ANGLE);
+
+  leftMotor.setSpeed(MAX_RPM);
+  
   delay(10000);
 }
 
@@ -131,7 +135,7 @@ int moveForward(float distance){
 */
 
 int moveForwardLeft(float distance){
-  int requiredStepsLeft = distance / (2*Pi*LEFT_WHEEL_RADIUS) * STEPS;
+  int requiredStepsLeft = (float)(distance / (2*Pi*LEFT_WHEEL_RADIUS)) * STEPS;
   while(requiredStepsLeft != 0){
     if(requiredStepsLeft > 20){
       leftMotor.step(20);
