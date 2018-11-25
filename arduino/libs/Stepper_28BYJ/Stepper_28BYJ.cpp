@@ -122,69 +122,69 @@ void Stepper_28BYJ::step(int steps_to_move)
 void Stepper_28BYJ::stepMotor(int thisStep)
 {
   byte reg1, reg2;
-  reg1 = DDRB & 0b00111111;
-  reg2 = DDRD & 0b11000000;
+  reg1 = PORTB & 0b00111111;
+  reg2 = PORTD & 0b11000000;
 	//Serial.println(thisStep);
 	switch (thisStep) {
 		case 0:    // 0001
-      DDRD = reg2 | 0b00000100;
-      DDRB = reg1 | 0b01000000;
+      PORTD = reg2 | 0b00000100;
+      PORTB = reg1 | 0b01000000;
 			//digitalWrite(motor_pin_1, LOW);
 			//digitalWrite(motor_pin_2, LOW);
 			//digitalWrite(motor_pin_3, LOW);
 			//digitalWrite(motor_pin_4, HIGH);
 		break;
 		case 1:    // 0011
-      DDRD = reg2 | 0b00001100;
-      DDRB = reg1 | 0b11000000;
+      PORTD = reg2 | 0b00001100;
+      PORTB = reg1 | 0b11000000;
 			//digitalWrite(motor_pin_1, LOW);
 			//digitalWrite(motor_pin_2, LOW);
 			//digitalWrite(motor_pin_3, HIGH);
 			//digitalWrite(motor_pin_4, HIGH);
 		break;
 		case 2:    //0010
-      DDRD = reg2 | 0b00001000;
-      DDRB = reg1 | 0b10000000;    
+      PORTD = reg2 | 0b00001000;
+      PORTB = reg1 | 0b10000000;    
 			//digitalWrite(motor_pin_1, LOW);
 			//digitalWrite(motor_pin_2, LOW);
 			//digitalWrite(motor_pin_3, HIGH);
 			//digitalWrite(motor_pin_4, LOW);
 		break;
 		case 3:    //0110
-      DDRD = reg2 | 0b00011001;
-      DDRB = reg1 | 0b10000000;     
+      PORTD = reg2 | 0b00011001;
+      PORTB = reg1 | 0b10000000;     
 			//digitalWrite(motor_pin_1, LOW);
 			//digitalWrite(motor_pin_2, HIGH);
 			//digitalWrite(motor_pin_3, HIGH);
 			//digitalWrite(motor_pin_4, LOW);
 		break;
 		case 4:    // 0100
-      DDRD = reg2 | 0b00010001;
-      DDRB = reg1 | 0b00000000;     
+      PORTD = reg2 | 0b00010001;
+      PORTB = reg1 | 0b00000000;     
 			//digitalWrite(motor_pin_1, LOW);
 			//digitalWrite(motor_pin_2, HIGH);
 			//digitalWrite(motor_pin_3, LOW);
 			//digitalWrite(motor_pin_4, LOW);
 		break;
 		case 5:    // 1100
-      DDRD = reg2 | 0b00110011;
-      DDRB = reg1 | 0b00000000;  
+      PORTD = reg2 | 0b00110011;
+      PORTB = reg1 | 0b00000000;  
 			//digitalWrite(motor_pin_1, HIGH);
 			//digitalWrite(motor_pin_2, HIGH);
 			//digitalWrite(motor_pin_3, LOW);
 			//digitalWrite(motor_pin_4, LOW);
 		break;
 		case 6:    //1000
-      DDRD = reg2 | 0b00100010;
-      DDRB = reg1 | 0b00000000;    
+      PORTD = reg2 | 0b00100010;
+      PORTB = reg1 | 0b00000000;    
 			//digitalWrite(motor_pin_1, HIGH);
 			//digitalWrite(motor_pin_2, LOW);
 			//digitalWrite(motor_pin_3, LOW);
 			//digitalWrite(motor_pin_4, LOW);
 		break;
 		case 7:    //1001
-      DDRD = reg2 | 0b00100110;
-      DDRB = reg1 | 0b01000000;    
+      PORTD = reg2 | 0b00100110;
+      PORTB = reg1 | 0b01000000;    
 			//digitalWrite(motor_pin_1, HIGH);
 			//digitalWrite(motor_pin_2, LOW);
 			//digitalWrite(motor_pin_3, LOW);
