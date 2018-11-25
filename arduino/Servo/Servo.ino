@@ -145,14 +145,14 @@ int moveForward(float distance){
 
 #define RIGHT_MOTOR 1
 #define LEFT_MOTOR 0
-int moveMotor(int motor, float distance){
+int moveMotor(int motorNum, float distance){
   Stepper_28BYJ motor;
   int direction = distance > 0? 1 : -1;
   int requiredStepsLeft
-  if(motor == LEFT_MOTOR){
+  if(motorNum == LEFT_MOTOR){
     requiredStepsLeft = (float)(distance / (2*Pi*LEFT_WHEEL_RADIUS)) * STEPS * direction;
     motor = leftMotor;
-  } else if (motor == RIGHT_MOTOR){
+  } else if (motorNum == RIGHT_MOTOR){
     requiredStepsLeft = (float)(distance / (2*Pi*RIGHT_WHEEL_RADIUS)) * STEPS * direction;
     motor = rightMotor;
   }
