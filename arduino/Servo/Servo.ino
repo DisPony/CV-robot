@@ -191,10 +191,18 @@ void moveTest(int distance){
 }
 
 void toRadiandsTest(float angle){
+  
   float result = TO_RADIANS(180);
   if(result == Pi){
     setPosition(20, 70);
   }
+
+  result = TO_RADIANS(angle){
+    if((result * 180 / Pi) == angle){
+      setPosition(30, 110);
+    }
+  }
+
 }
 
 //------------------------------------------------------------------------//
@@ -210,7 +218,7 @@ void loop(){
 #endif
 
 #ifdef UTILITY
-  toRadiandsTest()
+  toRadiandsTest(90)
 #endif
 
 }
