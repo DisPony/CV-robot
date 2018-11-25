@@ -1,4 +1,5 @@
 #include <Servo.h>
+#include <Stepper_28BYJ.h>
 
 //------------------------------------------------------------------------//
 
@@ -21,6 +22,25 @@ Servo servoVertical; /*2*/
 byte     MAX_V_ANGLE = 45;
 byte     MIN_V_ANGLE = 0;
 byte DEFAULT_V_ANGLE = 0;
+
+//------------------------------------------------------------------------//
+
+const float Pi = 3.1415;
+
+//------------------------------------------------------------------------//
+
+// steps per turn
+int STEPS = 4078;
+int MAX_RPM = 14;
+int ONE_RATE_DELAY = 1000 / MAX_RPM;
+
+Stepper_28BYJ leftMotor(STEPS, 5, 4, 3, 2);
+float LEFT_WHEEL_RADIUS = 5;
+
+Stepper_28BYJ rightMorot;
+float RIGHT_WHEEL_RADIUS = 5;
+
+//------------------------------------------------------------------------//
 
 void setup(){
   Serial.begin(9600);
@@ -78,6 +98,46 @@ void turnHorizontal(int angle){
   byte angleBuf = servoHorizontal.read();
   angleBuf += angle;
   setHorizontalAngle(angleBuf);
+}
+
+//------------------------------------------------------------------------//
+
+int moveForward(float distance){
+  int requiredStepsLeft = distance / (2*Pi*LEFT_WHEEL_RADIUS) * STEPS;
+  int requiredStepsRight = distance / (2*Pi*RIGHT_WHEEL_RADIUS) * STEPS;
+  
+  while(requiredStepsLeft != 0 && requiredStepsRight !=0){
+    if(requiredStepsLeft > 20){
+      leftMotor.step(20);
+      requiredStepsLeft -= 20;
+    } else {
+      leftMotor.step(requiredStepsLeft);
+      requiredStepsLeft = 0;
+    }
+
+    if(requiredStepsRight > 20){
+      leftMotor.step(20);
+      requiredStepsRight -= 20;
+    } else {
+      leftMotor.step(requiredStepsRight);
+      requiredStepsRight = 0;
+    }
+
+  }
+
+  return 0;
+}
+
+int moveForwardLeft(float distance){
+  int requiredStepsLeft = distance / (2*Pi*LEFT_WHEEL_RADIUS) * STEPS;
+  while(requiredStepsLeft != 0){
+    if(requiredStepsLeft > 20){
+      leftMotor.step(20);
+      requiredStepsLeft -= 20;
+    } else {
+      leftMotor.step(requiredStepsLeft);
+      requiredStepsLeft = 0;
+    }
 }
 
 //------------------------------------------------------------------------//
