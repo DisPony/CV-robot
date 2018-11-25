@@ -148,7 +148,8 @@ int moveForward(float distance){
 int moveMotor(int motorNum, float distance){
   Stepper_28BYJ motor;
   int direction = distance > 0? 1 : -1;
-  int requiredStepsLeft
+  int requiredStepsLeft;
+
   if(motorNum == LEFT_MOTOR){
     requiredStepsLeft = (float)(distance / (2*Pi*LEFT_WHEEL_RADIUS)) * STEPS * direction;
     motor = leftMotor;
@@ -174,7 +175,7 @@ int moveMotor(int motorNum, float distance){
 #define TURH_RIGHT 1
 #define TURN_LEFT 0
 int turnRobotNaive(float angle){
-  int direction = angle > 0? TURN_RIGHT : TURN_LEFT;
+  int direction = angle > 0? 1 : 0;
 
   moveMotor(LEFT_MOTOR, LEFT_WHEEL_RADIUS * TO_RADIANS(angle));
   moveMotor(RIGHT_MOTOR, RIGHT_WHEEL_RADIUS * TO_RADIANS(angle));
@@ -229,7 +230,7 @@ void driveTest(){
 }
 
 void moveTest(int distance){
-  moveLeftMotor(distance);
+  moveMotor(LEFT_MOTOR, distance);
   delay(10000);
 }
 
