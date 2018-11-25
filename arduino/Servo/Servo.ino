@@ -129,10 +129,10 @@ int moveForward(float distance){
     }
 
     if(requiredStepsRight > SINGLE_STEP){
-      leftMotor.step(SINGLE_STEP);
+      rightMotor.step(SINGLE_STEP);
       requiredStepsRight -= SINGLE_STEP;
     } else {
-      leftMotor.step(requiredStepsRight);
+      rightMotor.step(requiredStepsRight);
       requiredStepsRight = 0;
     }
 
