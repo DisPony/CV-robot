@@ -187,11 +187,11 @@ void driveTest(){
 
 void moveTest(int distance){
   moveForwardLeft(distance);
-  sleep(10000);
+  delay(10000);
 }
 
 void toRadiandsTest(float angle){
-  
+
   float result = TO_RADIANS(180);
   if(result == Pi){
     setPosition(20, 70);
@@ -218,7 +218,7 @@ void loop(){
 #endif
 
 #ifdef UTILITY
-  toRadiandsTest(90)
+  toRadiandsTest(90);
 #endif
 
 }
