@@ -27,6 +27,8 @@ byte DEFAULT_V_ANGLE = 0;
 
 const float Pi = 3.1415;
 
+const int SINGLE_STEP = 20;
+
 float TO_RADIANS(float angle){
   return ((angle * Pi) / 180);
 }
@@ -34,15 +36,15 @@ float TO_RADIANS(float angle){
 //------------------------------------------------------------------------//
 
 // steps per turn
-int STEPS = 4078;
+const int STEPS = 4078;
 int MAX_RPM = 14;
 int ONE_RATE_DELAY = 1000 / MAX_RPM;
 
 Stepper_28BYJ leftMotor(STEPS, 5, 4, 3, 2);
 float LEFT_WHEEL_RADIUS = 5;
 
-//Stepper_28BYJ rightMorot;
-//float RIGHT_WHEEL_RADIUS = 5;
+Stepper_28BYJ rightMorot(STEPS, 9, 8, 7, 6);
+float RIGHT_WHEEL_RADIUS = 5;
 
 //------------------------------------------------------------------------//
 
@@ -88,6 +90,8 @@ void setPositionLazy(byte vertical, byte horizontal){
 }
 
 //------------------------------------------------------------------------//
+
+// Functions turn camera on *angle*
 
 // angle may be negative as well
 void turnVertical(int angle){
@@ -138,24 +142,52 @@ int moveForward(float distance){
 }
 */
 
-int moveForwardLeft(float distance){
-  int requiredStepsLeft = (float)(distance / (2*Pi*LEFT_WHEEL_RADIUS)) * STEPS;
+int moveLeftMotor(float distance){
+  int direction = distance > 0? 1 : -1;
+  //
+  int requiredStepsLeft = (float)(distance / (2*Pi*LEFT_WHEEL_RADIUS)) * STEPS * direction;
+
   while(requiredStepsLeft != 0){
-    if(requiredStepsLeft > 20){
-      leftMotor.step(20);
-      requiredStepsLeft -= 20;
+    if(requiredStepsLeft > SINGLE_STEP){
+      leftMotor.step(SINGLE_STEP * direction);
+      requiredStepsLeft -= SINGLE_STEP;
     } else {
-      leftMotor.step(requiredStepsLeft);
+      leftMotor.step(requiredStepsLeft*direction);
       requiredStepsLeft = 0;
     }
   }
+
+  return 0;
 }
 
+#define TURH_RIGHT 1
+#define TURN_LEFT 0
+int turnRobotNaive(float angle){
+  int direction = angle > 0? TURN_RIGHT : TURN_LEFT;
+
+  moveLeftMotor(LEFT_WHEEL_RADIUS * TO_RADIANS(angle));
+  moveRightMotor(RIGHT_WHEEL_RADIUS * TO_RADIANS(angle));
+
+  return 0;
+}
+
+/*
+int turnRobotParallel(float angle){
+  int direction = angle > 0? TURN_RIGHT : TURN_LEFT;
+
+
+  moveLeftMotor(LEFT_WHEEL_RADIUS * TO_RADIANS(angle));
+  moveRightMotor(RIGHT_WHEEL_RADIUS * TO_RADIANS(angle));
+
+  return 0;
+
+}
+*/
 //------------------------------------------------------------------------//
 
 //#define LOOPTEST
-#define MOVETEST
-#define UTILITY
+//#define MOVETEST
+#define ROBOTTURNTEST
 
 void setPositionTest(byte vertical, byte horizontal){
   setPositionLazy(vertical, horizontal);
@@ -186,23 +218,8 @@ void driveTest(){
 }
 
 void moveTest(int distance){
-  moveForwardLeft(distance);
+  moveLeftMotor(distance);
   delay(10000);
-}
-
-void toRadiandsTest(float angle){
-
-  float result = TO_RADIANS(180);
-  if(result == Pi){
-    setPosition(20, 70);
-  }
-
-  result = TO_RADIANS(angle);
-  if((result * 180 / Pi) == angle){
-    setPosition(30, 110);
-  }
-  
-
 }
 
 //------------------------------------------------------------------------//
@@ -217,8 +234,8 @@ void loop(){
   moveTest(50);
 #endif
 
-#ifdef UTILITY
-  toRadiandsTest(90);
+#ifdef ROBOTTURNTEST
+  turnRobotNaive(45);
 #endif
 
 }
