@@ -37,7 +37,7 @@ float TO_RADIANS(float angle){
 const int SINGLE_STEP = 200;
 
 // steps per turn
-const int STEPS = 4078;
+const int STEPS = 4076;
 int MAX_RPM = 14;
 int ONE_RATE_DELAY = 1000 / MAX_RPM;
 
