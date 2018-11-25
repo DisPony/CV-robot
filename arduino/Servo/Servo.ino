@@ -198,7 +198,7 @@ int turnRobotParallel(float angle){
 //------------------------------------------------------------------------//
 
 //#define LOOPTEST
-//#define MOVETEST
+#define MOVETEST
 //#define ROBOTTURNTEST
 
 void setPositionTest(byte vertical, byte horizontal){
