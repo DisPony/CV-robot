@@ -37,8 +37,8 @@ int ONE_RATE_DELAY = 1000 / MAX_RPM;
 Stepper_28BYJ leftMotor(STEPS, 5, 4, 3, 2);
 float LEFT_WHEEL_RADIUS = 5;
 
-Stepper_28BYJ rightMorot;
-float RIGHT_WHEEL_RADIUS = 5;
+//Stepper_28BYJ rightMorot;
+//float RIGHT_WHEEL_RADIUS = 5;
 
 //------------------------------------------------------------------------//
 
@@ -102,6 +102,7 @@ void turnHorizontal(int angle){
 
 //------------------------------------------------------------------------//
 
+/*
 int moveForward(float distance){
   int requiredStepsLeft = distance / (2*Pi*LEFT_WHEEL_RADIUS) * STEPS;
   int requiredStepsRight = distance / (2*Pi*RIGHT_WHEEL_RADIUS) * STEPS;
@@ -127,7 +128,7 @@ int moveForward(float distance){
 
   return 0;
 }
-
+*/
 int moveForwardLeft(float distance){
   int requiredStepsLeft = distance / (2*Pi*LEFT_WHEEL_RADIUS) * STEPS;
   while(requiredStepsLeft != 0){
@@ -138,6 +139,7 @@ int moveForwardLeft(float distance){
       leftMotor.step(requiredStepsLeft);
       requiredStepsLeft = 0;
     }
+  }
 }
 
 //------------------------------------------------------------------------//
