@@ -197,11 +197,11 @@ void toRadiandsTest(float angle){
     setPosition(20, 70);
   }
 
-  result = TO_RADIANS(angle){
-    if((result * 180 / Pi) == angle){
-      setPosition(30, 110);
-    }
+  result = TO_RADIANS(angle);
+  if((result * 180 / Pi) == angle){
+    setPosition(30, 110);
   }
+  
 
 }
 
