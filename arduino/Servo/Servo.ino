@@ -192,7 +192,9 @@ void moveTest(int distance){
 
 void toRadiandsTest(float angle){
   float result = TO_RADIANS(180);
-  setPosition(20, 70);
+  if(result == Pi){
+    setPosition(20, 70);
+  }
 }
 
 //------------------------------------------------------------------------//
