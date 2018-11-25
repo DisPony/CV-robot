@@ -43,7 +43,7 @@ int ONE_RATE_DELAY = 1000 / MAX_RPM;
 Stepper_28BYJ leftMotor(STEPS, 5, 4, 3, 2);
 float LEFT_WHEEL_RADIUS = 5;
 
-Stepper_28BYJ rightMorot(STEPS, 9, 8, 7, 6);
+Stepper_28BYJ rightMotor(STEPS, 9, 8, 7, 6);
 float RIGHT_WHEEL_RADIUS = 5;
 
 //------------------------------------------------------------------------//
@@ -142,17 +142,28 @@ int moveForward(float distance){
 }
 */
 
-int moveLeftMotor(float distance){
+
+#define RIGHT_MOTOR 1
+#define LEFT_MOTOR 0
+int moveMotor(int motor, float distance){
+  Stepper_28BYJ motor;
   int direction = distance > 0? 1 : -1;
-  //
-  int requiredStepsLeft = (float)(distance / (2*Pi*LEFT_WHEEL_RADIUS)) * STEPS * direction;
+  int requiredStepsLeft
+  if(motor == LEFT_MOTOR){
+    requiredStepsLeft = (float)(distance / (2*Pi*LEFT_WHEEL_RADIUS)) * STEPS * direction;
+    motor = leftMotor;
+  } else if (motor == RIGHT_MOTOR){
+    requiredStepsLeft = (float)(distance / (2*Pi*RIGHT_WHEEL_RADIUS)) * STEPS * direction;
+    motor = rightMotor;
+  }
+
 
   while(requiredStepsLeft != 0){
     if(requiredStepsLeft > SINGLE_STEP){
-      leftMotor.step(SINGLE_STEP * direction);
+      motor.step(SINGLE_STEP * direction);
       requiredStepsLeft -= SINGLE_STEP;
     } else {
-      leftMotor.step(requiredStepsLeft*direction);
+      motor.step(requiredStepsLeft*direction);
       requiredStepsLeft = 0;
     }
   }
@@ -165,8 +176,8 @@ int moveLeftMotor(float distance){
 int turnRobotNaive(float angle){
   int direction = angle > 0? TURN_RIGHT : TURN_LEFT;
 
-  moveLeftMotor(LEFT_WHEEL_RADIUS * TO_RADIANS(angle));
-  moveRightMotor(RIGHT_WHEEL_RADIUS * TO_RADIANS(angle));
+  moveMotor(LEFT_MOTOR, LEFT_WHEEL_RADIUS * TO_RADIANS(angle));
+  moveMotor(RIGHT_MOTOR, RIGHT_WHEEL_RADIUS * TO_RADIANS(angle));
 
   return 0;
 }
