@@ -234,8 +234,9 @@ void moveTest(int distance){
   //moveMotor(LEFT_MOTOR, distance);
   //moveForward(50);
   //moveMotor(LEFT_MOTOR, 50);
-  leftMotor.step(STEPS);
-  delay(10000);
+  //leftMotor.step(STEPS);
+  DDRD = DDRD | 0b00111100;
+  delay(1000);
 }
 
 //------------------------------------------------------------------------//
