@@ -27,6 +27,10 @@ byte DEFAULT_V_ANGLE = 0;
 
 const float Pi = 3.1415;
 
+float TO_RADIANS(float angle){
+  return ((angle * Pi) / 180);
+}
+
 //------------------------------------------------------------------------//
 
 // steps per turn
@@ -51,7 +55,7 @@ void setup(){
   servoVertical.write(DEFAULT_V_ANGLE);
 
   leftMotor.setSpeed(MAX_RPM);
-  
+
   delay(10000);
 }
 
@@ -151,6 +155,7 @@ int moveForwardLeft(float distance){
 
 //#define LOOPTEST
 #define MOVETEST
+#define UTILITY
 
 void setPositionTest(byte vertical, byte horizontal){
   setPositionLazy(vertical, horizontal);
@@ -182,6 +187,12 @@ void driveTest(){
 
 void moveTest(int distance){
   moveForwardLeft(distance);
+  sleep(10000)
+}
+
+void toRadiandsTest(float angle){
+  float result = TO_RADIANS(180);
+  setPosition(20, 70);
 }
 
 //------------------------------------------------------------------------//
@@ -195,7 +206,11 @@ void loop(){
 #ifdef MOVETEST
   moveTest(50);
 #endif
-  
+
+#ifdef UTILITY
+  toRadiandsTest()
+#endif
+
 }
 
 
