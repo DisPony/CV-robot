@@ -27,16 +27,17 @@ byte DEFAULT_V_ANGLE = 0;
 
 const float Pi = 3.1415;
 
-const int SINGLE_STEP = 4078;
-
 float TO_RADIANS(float angle){
   return ((angle * Pi) / 180);
 }
 
 //------------------------------------------------------------------------//
 
+
+const int SINGLE_STEP = 200;
+
 // steps per turn
-const int STEPS = 200;
+const int STEPS = 4078;
 int MAX_RPM = 14;
 int ONE_RATE_DELAY = 1000 / MAX_RPM;
 
