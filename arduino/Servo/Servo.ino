@@ -187,7 +187,7 @@ void driveTest(){
 
 void moveTest(int distance){
   moveForwardLeft(distance);
-  sleep(10000)
+  sleep(10000);
 }
 
 void toRadiandsTest(float angle){
