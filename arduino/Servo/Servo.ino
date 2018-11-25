@@ -232,7 +232,8 @@ void driveTest(){
 
 void moveTest(int distance){
   //moveMotor(LEFT_MOTOR, distance);
-  moveForward(50);
+  //moveForward(50);
+  moveMotor(LEFT_MOTOR, 50);
   delay(10000);
 }
 
