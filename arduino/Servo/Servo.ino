@@ -114,7 +114,7 @@ void turnHorizontal(int angle){
 
 //------------------------------------------------------------------------//
 
-/*
+
 int moveForward(float distance){
   int requiredStepsLeft = distance / (2*Pi*LEFT_WHEEL_RADIUS) * STEPS;
   int requiredStepsRight = distance / (2*Pi*RIGHT_WHEEL_RADIUS) * STEPS;
@@ -140,7 +140,7 @@ int moveForward(float distance){
 
   return 0;
 }
-*/
+
 
 
 #define RIGHT_MOTOR 1
@@ -199,7 +199,7 @@ int turnRobotParallel(float angle){
 
 //#define LOOPTEST
 //#define MOVETEST
-#define ROBOTTURNTEST
+//#define ROBOTTURNTEST
 
 void setPositionTest(byte vertical, byte horizontal){
   setPositionLazy(vertical, horizontal);
@@ -230,7 +230,8 @@ void driveTest(){
 }
 
 void moveTest(int distance){
-  moveMotor(LEFT_MOTOR, distance);
+  //moveMotor(LEFT_MOTOR, distance);
+  moveForward(50);
   delay(10000);
 }
 
