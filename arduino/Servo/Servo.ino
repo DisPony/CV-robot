@@ -198,9 +198,10 @@ int turnRobotParallel(float angle){
 */
 //------------------------------------------------------------------------//
 
-#define LOOPTEST
+//#define LOOPTEST
 //#define MOVETEST
 //#define ROBOTTURNTEST
+//#define SETPOSITIONTEST
 
 void setPositionTest(byte vertical, byte horizontal){
   setPositionLazy(vertical, horizontal);
@@ -245,9 +246,8 @@ void loop(){
 
 #ifdef LOOPTEST
   driveTest();
-  //setPositionTest(20, 120);
 #endif
-  /*
+  
 #ifdef MOVETEST
   moveTest(50);
 #endif
@@ -255,7 +255,10 @@ void loop(){
 #ifdef ROBOTTURNTEST
   turnRobotNaive(45);
 #endif
-*/
+
+#ifdef SETPOSITIONTEST
+  setPositionTest(20, 120);
+#endif
 }
 
 
