@@ -245,7 +245,7 @@ void loop(){
 
 #ifdef LOOPTEST
   driveTest();
-  setPositionTest(20, 120);
+  //setPositionTest(20, 120);
 #endif
   /*
 #ifdef MOVETEST
