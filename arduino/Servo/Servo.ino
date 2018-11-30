@@ -57,7 +57,7 @@ void setup(){
   servoHorizontal.write(DEFAULT_H_ANGLE);
   servoVertical.write(DEFAULT_V_ANGLE);
 
-  leftMotor.setSpeed(MAX_RPM);
+  //leftMotor.setSpeed(MAX_RPM);
 
   delay(10000);
 }
