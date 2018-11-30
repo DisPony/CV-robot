@@ -242,6 +242,7 @@ void moveTest(int distance){
 //------------------------------------------------------------------------//
 
 void loop(){
+  /*
 #ifdef LOOPTEST
   driveTest();
   setPositionTest(20, 120);
@@ -254,7 +255,7 @@ void loop(){
 #ifdef ROBOTTURNTEST
   turnRobotNaive(45);
 #endif
-
+*/
 }
 
 
