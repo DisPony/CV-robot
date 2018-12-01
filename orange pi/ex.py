@@ -1,8 +1,6 @@
 import serial
-
-BAUDRATE = 9600
-PORT = "/dev/ttyUSB0"
-
+from constants import *
+import utilities
 
 arduino = serial.Serial(PORT, BAUDRATE)
 
