@@ -265,7 +265,7 @@ void loop(){
 #ifdef SERIALTEST
   if(Serial.available() == 9){
     byte buf[9];
-    Serial.read(buf, 9)
+    Serial.readBytes(buf, 9)
     byte func = buf[0];
     byte arg1 = buf[1];
     byte arg2 = buf[2];
