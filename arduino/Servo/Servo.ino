@@ -1,5 +1,6 @@
 #include <Servo.h>
 #include <Stepper_28BYJ.h>
+//#include <Serial>
 
 //------------------------------------------------------------------------//
 
@@ -202,6 +203,7 @@ int turnRobotParallel(float angle){
 //#define MOVETEST
 //#define ROBOTTURNTEST
 //#define SETPOSITIONTEST
+#define SERIALTEST
 
 void setPositionTest(byte vertical, byte horizontal){
   setPositionLazy(vertical, horizontal);
@@ -259,6 +261,18 @@ void loop(){
 #ifdef SETPOSITIONTEST
   setPositionTest(20, 120);
 #endif
+
+#ifdef SERIALTEST
+  if(Serial.available() == 9){
+    byte[9] buf;
+    Serial.read(buf, 9)
+    byte func = buf[0];
+    byte arg1 = buf[1];
+    byte arg2 = buf[2];
+    setPosition(arg1, arg2);
+  }
+#endif
+
 }
 
 
