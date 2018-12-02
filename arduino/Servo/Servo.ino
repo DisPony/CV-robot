@@ -251,7 +251,7 @@ void loop(){
 #endif
   
 #ifdef MOVETEST
-  moveTest(50);
+  moveTest(500);
 #endif
 
 #ifdef ROBOTTURNTEST
