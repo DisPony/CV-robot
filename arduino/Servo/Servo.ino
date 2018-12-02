@@ -200,10 +200,10 @@ int turnRobotParallel(float angle){
 //------------------------------------------------------------------------//
 
 //#define LOOPTEST
-//#define MOVETEST
+#define MOVETEST
 //#define ROBOTTURNTEST
 //#define SETPOSITIONTEST
-#define SERIALTEST
+//#define SERIALTEST
 
 void setPositionTest(byte vertical, byte horizontal){
   setPositionLazy(vertical, horizontal);
@@ -237,9 +237,9 @@ void moveTest(int distance){
   //moveMotor(LEFT_MOTOR, distance);
   //moveForward(50);
   //moveMotor(LEFT_MOTOR, 50);
-  leftMotor.step(STEPS);
-  PORTD = PORTD | 0b00111100;
-  delay(1000);
+  leftMotor.step(distance);
+  //PORTD = PORTD | 0b00111100;
+  delay(100000);
 }
 
 //------------------------------------------------------------------------//
