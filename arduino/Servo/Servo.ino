@@ -239,7 +239,7 @@ void moveTest(int distance){
   //moveMotor(LEFT_MOTOR, 50);
   leftMotor.step(distance);
   //PORTD = PORTD | 0b00111100;
-  delay(100000);
+  //delay(100000);
 }
 
 //------------------------------------------------------------------------//
