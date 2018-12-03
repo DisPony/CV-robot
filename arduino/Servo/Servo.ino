@@ -235,23 +235,26 @@ void loop(){
 #endif
 
 #ifdef SERIALTEST
+  byte servoArgV, servoArgH;
+  long moveArgSteps;
+  long turnArgSteps;
   if(Serial.available() == 9){
     byte buf[9];
     Serial.readBytes(buf, 9);
     byte func = buf[0];
     switch(func){
     case SERVO:
-      byte arg1 = buf[1];
-      byte arg2 = buf[2];
-      setPosition(arg1, arg2);
+      servoArgV = buf[1];
+      servoArgH = buf[2];
+      setPosition(servoArgV, servoArgH);
       break;
     case MOVE:
-      long arg3 = longFromByte(buf, 1);
-      leftMotor.move(arg3);
+      moveArgSteps = longFromByte(buf, 1);
+      leftMotor.move(moveArgSteps);
       break;
     case TURN:
-      long arg3 = longFromByte(buf, 1);
-      leftMotor.turn(arg3);
+      turnArgSteps = longFromByte(buf, 1);
+      leftMotor.turn(turnArgSteps);
       break;
     }
 
