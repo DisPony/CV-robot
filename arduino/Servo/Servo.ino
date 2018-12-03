@@ -92,7 +92,7 @@ void setPositionLazy(byte vertical, byte horizontal){
 }
 
 //------------------------------------------------------------------------//
-
+/*
 // Functions turn camera on *angle*
 
 // angle may be negative as well
@@ -113,7 +113,7 @@ void turnHorizontal(int angle){
   angleBuf += angle;
   setHorizontalAngle(angleBuf);
 }
-
+*/
 //------------------------------------------------------------------------//
 
 
@@ -200,7 +200,7 @@ int turnRobotParallel(float angle){
 //------------------------------------------------------------------------//
 
 //#define LOOPTEST
-//#define MOVETEST
+#define MOVETEST
 //#define ROBOTTURNTEST
 //#define SETPOSITIONTEST
 //#define SERIALTEST
