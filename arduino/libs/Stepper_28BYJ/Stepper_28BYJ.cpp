@@ -41,10 +41,6 @@ http://www.arduino.cc/en/Tutorial/Stepper_28BYJ
 #include "Arduino.h"
 #include "Stepper_28BYJ.h"
 
-/*
- конструктор для 4-проводной схемы подключения двигателя
- указываем какие выводы используются для управления двигателем
- */
 
 Stepper_28BYJ::Stepper_28BYJ(byte maskPortD, byte maskPortB) {
     this->stepsPerTurn = 4076;    // Количество шагов на один оборот внешнего вала на 360".
@@ -99,6 +95,7 @@ void Stepper_28BYJ::turnClockwise(int stepsToTurn) {
 /*
  * Направление поворота определяется знаком аргумента
  * Положительное - по часовой стрелке
+ * Отрицательное - против часовой
  */
 void Stepper_28BYJ::turn(int stepsToTurn) {
     int direction = stepsToTurn > 0? CLOCKWISE : COUNTERCLOCKWISE;
@@ -261,55 +258,7 @@ void Stepper_28BYJ::stepMotors(int thisStep) {
  *
  * Т.е. передавая число, для одного мотора будет выставляться соотв. сигналы
  * Для другого - симметричные ( 0001 - 1001, 0011 - 1000 и т.д.)
- * 0b11000000 0b00000010
- * 0b11100000 0b00000000
- * 0b10100000 0b00000000
- * 0b00110000 0b00000000
- * 0b00010000 0b00000001
- * 0b00011000 0b00000001
- * 0b00001000 0b00000011
- * 0b01001000 0b00000010
  */
-
-//void Stepper_28BYJ::stepMotorsOpposite(int thisStep) {
-//    byte reg2, reg1;
-//    reg1 = PORTD & 0b00000011; // 0 и 1 биты PORTD соотв. выводам RT TX, т.е. отвечают за сериал.
-//    reg2 = PORTB & 0b11111100;
-//    switch (thisStep) {
-//        case 0:    // 0001
-//            PORTD = reg1 | 0b11000000;
-//            PORTB = reg2 | 0b00000010;
-//            break;
-//        case 1:    // 0011
-//            PORTD = reg1 | 0b11100000;
-//            PORTB = reg2 | 0b00000000;
-//            break;
-//        case 2:    //0010
-//            PORTD = reg1 | 0b10100000;
-//            PORTB = reg2 | 0b00000000;
-//            break;
-//        case 3:    //0110
-//            PORTD = reg1 | 0b00110000;
-//            PORTB = reg2 | 0b00000000;
-//            break;
-//        case 4:    // 0100
-//            PORTD = reg1 | 0b00010000;
-//            PORTB = reg2 | 0b00000001;
-//            break;
-//        case 5:    // 1100
-//            PORTD = reg1 | 0b00011000;
-//            PORTB = reg2 | 0b00000001;
-//            break;
-//        case 6:    //1000
-//            PORTD = reg1 | 0b00001000;
-//            PORTB = reg2 | 0b00000011;
-//            break;
-//        case 7:    //1001
-//            PORTD = reg1 | 0b01001000;
-//            PORTB = reg2 | 0b00000010;
-//            break;
-//    }
-//}
 
 void Stepper_28BYJ::stepMotorsOpposite(int thisStep) {
     byte reg2, reg1;

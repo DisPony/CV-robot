@@ -1,6 +1,5 @@
 #include <Servo.h>
 #include <Stepper_28BYJ.h>
-//#include <Serial>
 
 //------------------------------------------------------------------------//
 
@@ -26,34 +25,12 @@ byte DEFAULT_V_ANGLE = 0;
 
 //------------------------------------------------------------------------//
 
-const float Pi = 3.1415;
-
-float TO_RADIANS(float angle){
-  return ((angle * Pi) / 180);
-}
-
-//------------------------------------------------------------------------//
-
-
-const int SINGLE_STEP = 200;
-
-// steps per turn
-const int STEPS = 4076;
-int MAX_RPM = 14;
-int ONE_RATE_DELAY = 1000 / MAX_RPM;
-
-
 byte maskD = 11111100;
 byte maskB = 00000011;
 
 Stepper_28BYJ leftMotor(maskD, maskB);
-float LEFT_WHEEL_RADIUS = 5;
-
-//Stepper_28BYJ rightMotor(9, 8, 7, 6);
-float RIGHT_WHEEL_RADIUS = 5;
 
 //------------------------------------------------------------------------//
-//
 void setup(){
   Serial.begin(9600);
 
@@ -64,7 +41,6 @@ void setup(){
 
   delay(10000);
 }
-
 //------------------------------------------------------------------------//
 
 void setVerticalAngle(byte angle){
@@ -82,15 +58,6 @@ void setHorizontalAngle(byte angle){
 void setPosition(byte vertical, byte horizontal){
   setVerticalAngle(vertical);
   setHorizontalAngle(horizontal);
-}
-
-void setPositionLazy(byte vertical, byte horizontal){
-  if(vertical != servoVertical.read()){
-    setVerticalAngle(vertical);
-    }  
-  if(horizontal != servoHorizontal.read()){
-    setHorizontalAngle(horizontal);
-  }
 }
 
 //------------------------------------------------------------------------//
@@ -201,7 +168,6 @@ int turnRobotParallel(float angle){
 */ 
 //------------------------------------------------------------------------//
 
-//#define LOOPTEST
 #define MOVETEST
 //#define ROBOTTURNTEST
 //#define SETPOSITIONTEST
@@ -244,10 +210,6 @@ void moveTest(int distance){
 //------------------------------------------------------------------------//
 
 void loop(){
-
-#ifdef LOOPTEST
-  driveTest();
-#endif
   
 #ifdef MOVETEST
   moveTest(500);
@@ -255,7 +217,7 @@ void loop(){
 #endif
 
 #ifdef ROBOTTURNTEST
-  turnRobotNaive(45);
+//  leftMotor.turn();
 #endif
 
 #ifdef SETPOSITIONTEST

@@ -7,6 +7,7 @@
   Combination version   (0.3) by Tom Igoe and David Mellis
   Bug fix for four-wire   (0.4) by Tom Igoe, bug fix from Noah Shibley
   Модифицирована для 28BYJ - alex48 (www.alex48.110kpd.ru
+  
 
   Управленине униполярным шаговым двигателем подключенным по 4-х проводной схеме.
 
@@ -42,16 +43,25 @@
 #define COUNTERCLOCKWISE 0
 #define FORWARD 1
 #define BACKWARD 0
-#define LEAST_DELAY 1000
+
+// Задержка между шагами двигателя
+// Можно использовать для ускорения-замедления, 
+// если перенести внутрь класса. 
+// При указании задержки меньше порогового значения
+// двигатели перестают успевать обработать сигнал.
+// УКАЗЫВАЕТСЯ В МИКРОСЕКУНДАХ
+#define LEAST_DELAY 1000 
 
 // описание интерфейса библиотеки
 class Stepper_28BYJ {
 public:
-    // конструктор
     Stepper_28BYJ(byte maskPortD, byte maskPortB);
 
-    // mover method:
     void move(int stepsToTurn);
+
+    void moveForward(int stepsToMove);
+
+    void moveBackward(int stepsToMove);
 
     void turn(int stepsToMove);
 
@@ -63,22 +73,22 @@ public:
 
 private:
 
-    // Функция для езды взад-вперед
-    void stepMotors(int this_step);
+    // Вспомогательные функции для шагания двигателя:
 
-    // Функция для поворота на месте влево-вправо
+    // Езда взад-вперед
+    void stepMotors(int thisStep);
+
+    // Езда влево-вправо
     void stepMotorsOpposite(int thisStep);
 
-    // задержка между шагами в мс, расчитана на основе скорости
-    int stepsPerTurn;        // количество шагов на 1 оборот
-    // номер текущего шага из общей последовательности разных шагов
+    // количество шагов на 1 оборот
+    int stepsPerTurn;       
+    
+    // Битовые маски портов B и D (См. https://www.arduino.cc/en/Reference/PortManipulation) 
+    // 1 - порт используется выводом двигателя, 0 - не используется.
+    // Для дальнейшего развития библиотеки.
     byte maskPortB;
     byte maskPortD;
-
-    void moveForward(int stepsToMove);
-
-    void moveBackward(int stepsToMove);
-
 
 };
 
