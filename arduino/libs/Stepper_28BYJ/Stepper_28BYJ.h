@@ -53,6 +53,8 @@ public:
     // mover method:
     void move(int stepsToTurn);
 
+    void turn(int stepsToMove);
+
     void turnClockwise(int stepsToTurn);
 
     void turnCounterclockwise(int stepsToTurn);
@@ -72,8 +74,6 @@ private:
     // номер текущего шага из общей последовательности разных шагов
     byte maskPortB;
     byte maskPortD;
-
-    void turn(int stepsToMove);
 
     void moveForward(int stepsToMove);
 
