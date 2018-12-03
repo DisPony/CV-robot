@@ -214,7 +214,7 @@ void driveTest(){
 void moveTest(int distance){
   leftMotor.move(distance);
   delay(1000);
-  leftMotor.turn(distance);
+  leftMotor.turn(distance / 10);
 }
 
 //------------------------------------------------------------------------//
@@ -222,7 +222,7 @@ void moveTest(int distance){
 void loop(){
   
 #ifdef MOVETEST
-  moveTest(500);
+  moveTest(5000);
   delay(1000);
 #endif
 
