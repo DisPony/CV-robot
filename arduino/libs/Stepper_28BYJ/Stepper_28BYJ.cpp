@@ -46,24 +46,19 @@ http://www.arduino.cc/en/Tutorial/Stepper_28BYJ
  указываем какие выводы используются для управления двигателем
  */
 
-Stepper_28BYJ::Stepper_28BYJ(int motor_pin_1, int motor_pin_2, int motor_pin_3, int motor_pin_4) {
-    // инициализируем значение переменных
-    // номер текущего шага двигателя
-    // скорость двигателя в оборотах в минуту
-    // метка времени в мс, когда был сделан последний шаг
+Stepper_28BYJ::Stepper_28BYJ(byte maskPortD, byte maskPortB) {
     this->stepsPerTurn = 4076;    // Количество шагов на один оборот внешнего вала на 360".
-
-    // указываем к каким выводам Ардуино подключен двигатель
-    this->motor_pin_1 = motor_pin_1;
-    this->motor_pin_2 = motor_pin_2;
-    this->motor_pin_3 = motor_pin_3;
-    this->motor_pin_4 = motor_pin_4;
-
+    this->maskPortB = maskPortB;
+    this->maskPortD = maskPortD;
     // устанавливаем режим работы выводов на ВЫВОД
-    pinMode(this->motor_pin_1, OUTPUT);
-    pinMode(this->motor_pin_2, OUTPUT);
-    pinMode(this->motor_pin_3, OUTPUT);
-    pinMode(this->motor_pin_4, OUTPUT);
+    pinMode(9, OUTPUT);
+    pinMode(8, OUTPUT);
+    pinMode(7, OUTPUT);
+    pinMode(6, OUTPUT);
+    pinMode(5, OUTPUT);
+    pinMode(4, OUTPUT);
+    pinMode(3, OUTPUT);
+    pinMode(2, OUTPUT);
 }
 
 

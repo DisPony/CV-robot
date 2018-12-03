@@ -42,10 +42,14 @@ const int STEPS = 4076;
 int MAX_RPM = 14;
 int ONE_RATE_DELAY = 1000 / MAX_RPM;
 
-Stepper_28BYJ leftMotor(5, 4, 3, 2);
+
+byte maskD = 11111100;
+byte maskB = 00000011
+
+Stepper_28BYJ leftMotor(maskD, maskB);
 float LEFT_WHEEL_RADIUS = 5;
 
-Stepper_28BYJ rightMotor(9, 8, 7, 6);
+//Stepper_28BYJ rightMotor(9, 8, 7, 6);
 float RIGHT_WHEEL_RADIUS = 5;
 
 //------------------------------------------------------------------------//

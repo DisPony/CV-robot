@@ -70,13 +70,8 @@ private:
     // задержка между шагами в мс, расчитана на основе скорости
     int stepsPerTurn;        // количество шагов на 1 оборот
     // номер текущего шага из общей последовательности разных шагов
-
-    // motor pin numbers:
-    // выводы используемые для подключения двигателя
-    int motor_pin_1;
-    int motor_pin_2;
-    int motor_pin_3;
-    int motor_pin_4;
+    byte maskPortB;
+    byte maskPortD;
 
     void turn(int stepsToMove);
 
