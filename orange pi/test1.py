@@ -10,7 +10,7 @@ ser = serial.Serial(PORT, BAUDRATE)
 myRobot = Robot.Robot(ser)
 
 while True:
-    ch = input("command: ")
+    ch = raw_input("command: ")
     if(ch == "w"):
         myRobot.move(500)
     elif(ch == "s"):
