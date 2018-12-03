@@ -62,8 +62,6 @@ void setup(){
   servoHorizontal.write(DEFAULT_H_ANGLE);
   servoVertical.write(DEFAULT_V_ANGLE);
 
-  //leftMotor.setSpeed(MAX_RPM);
-
   delay(10000);
 }
 
@@ -200,7 +198,7 @@ int turnRobotParallel(float angle){
   return 0;
 
 }
-*/ */
+*/ 
 //------------------------------------------------------------------------//
 
 //#define LOOPTEST
@@ -238,12 +236,7 @@ void driveTest(){
 }
 
 void moveTest(int distance){
-  //moveMotor(LEFT_MOTOR, distance);
-  //moveForward(50);
-  //moveMotor(LEFT_MOTOR, 50);
   leftMotor.move(distance);
-  //PORTD = PORTD | 0b00111100;
-  //delay(100000);
 }
 
 //------------------------------------------------------------------------//
