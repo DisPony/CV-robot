@@ -28,7 +28,17 @@ byte DEFAULT_V_ANGLE = 0;
 byte maskD = 11111100;
 byte maskB = 00000011;
 
+byte SERVO = 1;
+byte MOVE = 2;
+byte TURN = 3;
+
 Stepper_28BYJ leftMotor(maskD, maskB);
+
+//------------------------------------------------------------------------//
+
+long longFromByte(byte* arr, byte offset){
+  return (arr[offset + 0] << 24) + (arr[offset + 1] << 16) + (arr[offset + 2] << 8) + b[offset + 3];
+}
 
 //------------------------------------------------------------------------//
 void setup(){
@@ -229,9 +239,22 @@ void loop(){
     byte buf[9];
     Serial.readBytes(buf, 9);
     byte func = buf[0];
-    byte arg1 = buf[1];
-    byte arg2 = buf[2];
-    setPosition(arg1, arg2);
+    switch(func){
+    case SERVO:
+      byte arg1 = buf[1];
+      byte arg2 = buf[2];
+      setPosition(arg1, arg2);
+      break;
+    case MOVE:
+      long arg1 = longFromByte(buf, 1);
+      leftMotor.move(arg1);
+      break;
+    case TURN:
+      long arg1 = longFromByte(buf, 1);
+      leftMotor.turn(arg1);
+      break;
+    }
+
   }
 #endif
 
