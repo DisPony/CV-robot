@@ -38,37 +38,53 @@
 #ifndef Stepper_28BYJ_h
 #define Stepper_28BYJ_h
 
+#define CLOCKWISE 1
+#define COUNTERCLOCKWISE 0
+#define FORWARD 1
+#define BACKWARD 0
+#define LEAST_DELAY 1
+
 // описание интерфейса библиотеки
 class Stepper_28BYJ {
-  public:
+public:
     // конструктор
-    Stepper_28BYJ(int number_of_steps, int motor_pin_1, int motor_pin_2, int motor_pin_3, int motor_pin_4);
-
-    // speed setter method:
-    void setSpeed(long whatSpeed);
+    Stepper_28BYJ(byte maskPortD, byte maskPortB);
 
     // mover method:
-    void step(int number_of_steps);
+    void move(int stepsToTurn);
 
-    int version(void);
+    void turnClockwise(int stepsToTurn);
 
-  private:
-    void stepMotor(int this_step);
-   
-    int direction;				// направление вращения
-    int speed;					// скорость в оборотах в минуту
-    unsigned long step_delay;	// задержка между шагами в мс, расчитана на основе скорости
-    int number_of_steps;		// количество шагов на 1 оборот
-    int step_number;			// номер текущего шага из общей последовательности разных шагов
-    
+    void turnCounterclockwise(int stepsToTurn);
+
+    void setStepsPerTurn(int stepsPerTurn);
+
+private:
+
+    // Функция для езды взад-вперед
+    void stepMotors(int this_step);
+
+    // Функция для поворота на месте влево-вправо
+    void stepMotorsOpposite(int thisStep);
+
+    // задержка между шагами в мс, расчитана на основе скорости
+    int stepsPerTurn;        // количество шагов на 1 оборот
+    // номер текущего шага из общей последовательности разных шагов
+
     // motor pin numbers:
-	// выводы используемые для подключения двигателя
+    // выводы используемые для подключения двигателя
     int motor_pin_1;
     int motor_pin_2;
     int motor_pin_3;
     int motor_pin_4;
-    
-    long last_step_time;		// метка времени в мс, когда был сделан последний шаг
+
+    void turn(int stepsToMove);
+
+    void moveForward(int stepsToMove);
+
+    void moveBackward(int stepsToMove);
+
+
 };
 
 #endif

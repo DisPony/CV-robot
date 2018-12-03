@@ -46,157 +46,319 @@ http://www.arduino.cc/en/Tutorial/Stepper_28BYJ
  указываем какие выводы используются для управления двигателем
  */
 
-Stepper_28BYJ::Stepper_28BYJ(int number_of_steps, int motor_pin_1, int motor_pin_2, int motor_pin_3, int motor_pin_4)
-{
-  // инициализируем значение переменных
-  this->step_number = 0;	// номер текущего шага двигателя
-  this->speed = 0;			// скорость двигателя в оборотах в минуту
-  this->direction = 0;      // направление вращения
-  this->last_step_time = 0;	// метка времени в мс, когда был сделан последний шаг
-  this->number_of_steps = number_of_steps;	// количество шагов на 1 оборот
-  
-  // указываем к каким выводам Ардуино подключен двигатель
-  this->motor_pin_1 = motor_pin_1;
-  this->motor_pin_2 = motor_pin_2;
-  this->motor_pin_3 = motor_pin_3;
-  this->motor_pin_4 = motor_pin_4;
-  
-  // устанавливаем режим работы выводов на ВЫВОД
-  pinMode(this->motor_pin_1, OUTPUT);
-  pinMode(this->motor_pin_2, OUTPUT);
-  pinMode(this->motor_pin_3, OUTPUT);
-  pinMode(this->motor_pin_4, OUTPUT); 
+Stepper_28BYJ::Stepper_28BYJ(int motor_pin_1, int motor_pin_2, int motor_pin_3, int motor_pin_4) {
+    // инициализируем значение переменных
+    // номер текущего шага двигателя
+    // скорость двигателя в оборотах в минуту
+    // метка времени в мс, когда был сделан последний шаг
+    this->stepsPerTurn = 4076;    // Количество шагов на один оборот внешнего вала на 360".
+
+    // указываем к каким выводам Ардуино подключен двигатель
+    this->motor_pin_1 = motor_pin_1;
+    this->motor_pin_2 = motor_pin_2;
+    this->motor_pin_3 = motor_pin_3;
+    this->motor_pin_4 = motor_pin_4;
+
+    // устанавливаем режим работы выводов на ВЫВОД
+    pinMode(this->motor_pin_1, OUTPUT);
+    pinMode(this->motor_pin_2, OUTPUT);
+    pinMode(this->motor_pin_3, OUTPUT);
+    pinMode(this->motor_pin_4, OUTPUT);
 }
 
-/*
-  устанавливаем скорость вращения в минутах
-*/
-void Stepper_28BYJ::setSpeed(long whatSpeed)
-{
-  this->step_delay = 60L * 1000L / this->number_of_steps / whatSpeed;
-}
 
 /*
-  Передвигаемся на steps_to_move steps шагов. Если значение отрицательное,
-  то вращаемся в обратном направлении  
+ * Для всех функций движения направление определяется относительно
+ * такого расположения колес: *-|___|-*
+ * где * это колесо
+ * а - это вал
  */
-void Stepper_28BYJ::step(int steps_to_move)
-{  
-  int steps_left = abs(steps_to_move);	// определяем сколько шагов нужно сделать
-  
-  // определяем направление вращения в зависимости от знака количества шагов
-  if (steps_to_move > 0) {this->direction = 1;}
-  if (steps_to_move < 0) {this->direction = 0;}
 
-  // в цикле уменьшаем количество шагов, которые нужно прошагать на 1
-  while(steps_left > 0) {
-  // шагаем только если выдержана сооветствующая пауза
-  if (millis() - this->last_step_time >= this->step_delay) {
-	  // запоминаем, когда был сделан последний шаг
-      this->last_step_time = millis();
-	  // увеличиваем или уменьшаем номер текущего шага
-	  // в зависимости от направления вращения
-      if (this->direction == 1) {
-        this->step_number++;
-        if (this->step_number == this->number_of_steps) {
-          this->step_number = 0;
-        }
-      } 
-      else { 
-        if (this->step_number == 0) {
-          this->step_number = this->number_of_steps;
-        }
-        this->step_number--;
-      }
-	  // уменьшаем количество шагов, которые осталось прошагать
-      steps_left--;
-	  // переходим к следующему шагу 0, 1, 2, 3, 4, 5, 6 или 7
-      stepMotor(this->step_number % 8);
+
+/*                      |    _____   ^
+ * При движении налево  \/ *-|___|-* | <--- вот эта тележка
+ * должна вращать оба колеса по часовой стрелке
+ */
+void Stepper_28BYJ::turnCounterclockwise(int stepsToTurn) {
+    int stepsLeft = stepsToTurn;
+    while (stepsLeft > 0){
+        delayMicroseconds(LEAST_DELAY);
+        stepMotors(stepsLeft % 8);
+        stepsLeft--;
     }
-  }
 }
 
-/*
- 1 шаг (вперёд или назад)
+
+/*                      ^   _____   |
+ * При движении направо | *-|___|-* \/ <--- вот эта тележка
+ * должна вращать оба колеса против часовой стрелки
  */
-void Stepper_28BYJ::stepMotor(int thisStep)
-{
-  byte reg1, reg2;
-  reg1 = PORTB & 0b11111100;
-  reg2 = PORTD & 0b00000011;
-	//Serial.println(thisStep);
-	switch (thisStep) {
-		case 0:    // 0001
-      PORTD = reg2 | 0b01000100;
-      PORTB = reg1 | 0b00000000;
-			//digitalWrite(motor_pin_1, LOW);
-			//digitalWrite(motor_pin_2, LOW);
-			//digitalWrite(motor_pin_3, LOW);
-			//digitalWrite(motor_pin_4, HIGH);
-		break;
-		case 1:    // 0011
-      PORTD = reg2 | 0b11001100;
-      PORTB = reg1 | 0b00000000;
-			//digitalWrite(motor_pin_1, LOW);
-			//digitalWrite(motor_pin_2, LOW);
-			//digitalWrite(motor_pin_3, HIGH);
-			//digitalWrite(motor_pin_4, HIGH);
-		break;
-		case 2:    //0010
-      PORTD = reg2 | 0b10001000;
-      PORTB = reg1 | 0b00000000;    
-			//digitalWrite(motor_pin_1, LOW);
-			//digitalWrite(motor_pin_2, LOW);
-			//digitalWrite(motor_pin_3, HIGH);
-			//digitalWrite(motor_pin_4, LOW);
-		break;
-		case 3:    //0110
-      PORTD = reg2 | 0b10011000;
-      PORTB = reg1 | 0b00000001;     
-			//digitalWrite(motor_pin_1, LOW);
-			//digitalWrite(motor_pin_2, HIGH);
-			//digitalWrite(motor_pin_3, HIGH);
-			//digitalWrite(motor_pin_4, LOW);
-		break;
-		case 4:    // 0100
-      PORTD = reg2 | 0b00010000;
-      PORTB = reg1 | 0b00000001;     
-			//digitalWrite(motor_pin_1, LOW);
-			//digitalWrite(motor_pin_2, HIGH);
-			//digitalWrite(motor_pin_3, LOW);
-			//digitalWrite(motor_pin_4, LOW);
-		break;
-		case 5:    // 1100
-      PORTD = reg2 | 0b00110000;
-      PORTB = reg1 | 0b00000011;  
-			//digitalWrite(motor_pin_1, HIGH);
-			//digitalWrite(motor_pin_2, HIGH);
-			//digitalWrite(motor_pin_3, LOW);
-			//digitalWrite(motor_pin_4, LOW);
-		break;
-		case 6:    //1000
-      PORTD = reg2 | 0b00100000;
-      PORTB = reg1 | 0b00000010;    
-			//digitalWrite(motor_pin_1, HIGH);
-			//digitalWrite(motor_pin_2, LOW);
-			//digitalWrite(motor_pin_3, LOW);
-			//digitalWrite(motor_pin_4, LOW);
-		break;
-		case 7:    //1001
-      PORTD = reg2 | 0b01100100;
-      PORTB = reg1 | 0b00000010;    
-			//digitalWrite(motor_pin_1, HIGH);
-			//digitalWrite(motor_pin_2, LOW);
-			//digitalWrite(motor_pin_3, LOW);
-			//digitalWrite(motor_pin_4, HIGH);
-		break;
-	}
+void Stepper_28BYJ::turnClockwise(int stepsToTurn) {
+    int stepsPassed = 0;
+    while(stepsPassed < stepsToMove){
+        delayMicroseconds(LEAST_DELAY);
+        stepMotors(stepsPassed % 8);
+        stepsPassed++;
+    }
+}
+/*
+ * Направление поворота определяется знаком аргумента
+ * Положительное - по часовой стрелке
+ */
+void Stepper_28BYJ::turn(int stepsToTurn) {
+    int direction = stepsToTurn > 0? CLOCKWISE : COUNTERCLOCKWISE;
+
+    if(direction == CLOCKWISE){
+        turnClockwise(stepsToTurn);
+    } else if (direction == COUNTERCLOCKWISE){
+        turnCounterclockwise(stepsToTurn);
+    }
+}
+
+
+/*                     ^   _____   ^
+ * При движении вперед | *-|___|-* | <--- вот эта тележка
+ * (стрелочки показывают направление движения)
+ * должна вращать левое колесо против часовой стрелки
+ * а правое - по часовой.
+ */
+void Stepper_28BYJ::moveForward(int stepsToMove) {
+    int stepsPassed = 0;
+    while(stepsPassed < stepsToMove){
+        delayMicroseconds(LEAST_DELAY);
+        stepMotorsOpposite(stepsPassed % 8);
+        stepsPassed++;
+    }
+}
+
+/*                      |    _____    |
+ * При движении назад   \/  *-|___|-* \/ <--- вот эта тележка
+ * должна вращать левое колесо по часовой стрелке
+ * а правое - против часовой
+ */
+void Stepper_28BYJ::moveBackward(int stepsToMove) {
+    int stepsLeft = stepsToMove;
+    while(stepsLeft > 0){
+        delayMicroseconds(LEAST_DELAY);
+        stepMotorsOpposite(stepsPassed % 8);
+        stepsLeft--;
+    }
 }
 
 /*
-  метода возвращает версию библиотеки
-*/
-int Stepper_28BYJ::version(void)
-{
-  return 4;
+ * Для удобства направление движения определяется
+ * знаком аргумента. Положительное вперед, отрицательное назад
+ * Иначе пришлось бы добавить второй аргумент.
+ * Возможно, для ясности так и стоит поступить?
+ */
+void Stepper_28BYJ::move(int stepsToMove) {
+    int direction = stepsToMove > 0? FORWARD : BACKWARD;
+
+    if(direction == FORWARD){
+        moveForward(stepsToMove);
+    } else if (direction == BACKWARD){
+        moveBackward(stepsToMove);
+    }
 }
+
+/*
+ *   (Суффикс 0b обозначает двоичную запись числа)
+ *   Биты двоичной записи числа  идут справа налево по значимости
+ *                       0b00000000
+ *    Наиболее значимый <----------- наименее значимый
+ *    И нумеруются соответственно.
+ *
+ *      C0 - BLUE
+ *      C1 - PINK
+ *      C2 - YELLOW
+ *      C3 - ORANGE
+ *      Шаг     C   C1	C2	C3
+ *        1     0   0	0	1
+ *        2     0   0	1	1
+ *        3     0   0	1	0
+ *        4     0   1	1	0
+ *        5     0   1	0	0
+ *        6     1   1	0	0
+ *        7     1   0	0	0
+ *        8     1   0	0	1
+ *
+ *   PORTD отображается на цифровые выводы 0-7
+ *   PORTB отображается на цифровые выводы 8-13 (См. https://www.arduino.cc/en/Reference/PortManipulation)
+ *
+ * Как выставлять сигналы на нужные ноги?
+ * Побитовое или (операция |) 0000 и 0101 даст 0101, это позволяет выставлять 1 на нужные порты
+ * Побитовое и (операция &) 0011 и 0101 даст 0001, это позволяет обнулять нужные выводы
+ *
+ *         0  1  2  3  4  5  6  7         8  9 10 11 12 13
+ *  PORTB                         PORTD =                   ===>
+ */
+
+
+/*
+ * Последовательно передавая числа от 0 до 7
+ * моторы будут вращаться по часовой стрелке
+ * Вот так.
+ *   |   _____   ^
+ *  \/ *-|___|-* |
+ *
+ * Последовательно передавая числа от 7 до 0
+ * моторы будут вращаться против часовой стрелки
+ *   ^   _____   |
+ *   | *-|___|-* \/
+ *
+ *   Т.е.  на 4 управлающих пина первого и
+ *   на 4 управляющих пина второго мотора будут подаваться
+ *   одинаковые сигналы.
+ *
+ */
+void Stepper_28BYJ::stepMotors(int thisStep) {
+    byte reg2, reg1;
+    reg1 = PORTD & 0b00000011; // 0 и 1 биты PORTD соотв. выводам RT TX, т.е. отвечают за сериал.
+    reg2 = PORTB & 0b11111100;
+    switch (thisStep) {
+        case 0:    // 0001
+            PORTD = reg1 | 0b01000100;
+            PORTB = reg2 | 0b00000000;
+            break;
+        case 1:    // 0011
+            PORTD = reg1 | 0b11001100;
+            PORTB = reg2 | 0b00000000;
+            break;
+        case 2:    //0010
+            PORTD = reg1 | 0b10001000;
+            PORTB = reg2 | 0b00000000;
+            break;
+        case 3:    //0110
+            PORTD = reg1 | 0b10011000;
+            PORTB = reg2 | 0b00000001;
+            break;
+        case 4:    // 0100
+            PORTD = reg1 | 0b00010000;
+            PORTB = reg2 | 0b00000001;
+            break;
+        case 5:    // 1100
+            PORTD = reg1 | 0b00110000;
+            PORTB = reg2 | 0b00000011;
+            break;
+        case 6:    //1000
+            PORTD = reg1 | 0b00100000;
+            PORTB = reg2 | 0b00000010;
+            break;
+        case 7:    //1001
+            PORTD = reg1 | 0b01100100;
+            PORTB = reg2 | 0b00000010;
+            break;
+    }
+}
+
+
+/*
+ * Последовательно передавая числа от 0 до 7
+ * левый мотор будет вращаться по часовой стрелке, а правый - против часовой
+ * Вот так.
+ *   |   _____    |
+ *  \/ *-|___|-* \/
+ * Последовательно передавая числа от 7 до 0
+ * левый мотор будет вращаться против часовой стрелки, а правый - по часовой
+ * Вот так.
+ *   ^   _____   ^
+ *   | *-|___|-* |
+ *
+ * Т.е. передавая число, для одного мотора будет выставляться соотв. сигналы
+ * Для другого - симметричные ( 0001 - 1001, 0011 - 1000 и т.д.)
+ * 0b11000000 0b00000010
+ * 0b11100000 0b00000000
+ * 0b10100000 0b00000000
+ * 0b00110000 0b00000000
+ * 0b00010000 0b00000001
+ * 0b00011000 0b00000001
+ * 0b00001000 0b00000011
+ * 0b01001000 0b00000010
+ */
+
+//void Stepper_28BYJ::stepMotorsOpposite(int thisStep) {
+//    byte reg2, reg1;
+//    reg1 = PORTD & 0b00000011; // 0 и 1 биты PORTD соотв. выводам RT TX, т.е. отвечают за сериал.
+//    reg2 = PORTB & 0b11111100;
+//    switch (thisStep) {
+//        case 0:    // 0001
+//            PORTD = reg1 | 0b11000000;
+//            PORTB = reg2 | 0b00000010;
+//            break;
+//        case 1:    // 0011
+//            PORTD = reg1 | 0b11100000;
+//            PORTB = reg2 | 0b00000000;
+//            break;
+//        case 2:    //0010
+//            PORTD = reg1 | 0b10100000;
+//            PORTB = reg2 | 0b00000000;
+//            break;
+//        case 3:    //0110
+//            PORTD = reg1 | 0b00110000;
+//            PORTB = reg2 | 0b00000000;
+//            break;
+//        case 4:    // 0100
+//            PORTD = reg1 | 0b00010000;
+//            PORTB = reg2 | 0b00000001;
+//            break;
+//        case 5:    // 1100
+//            PORTD = reg1 | 0b00011000;
+//            PORTB = reg2 | 0b00000001;
+//            break;
+//        case 6:    //1000
+//            PORTD = reg1 | 0b00001000;
+//            PORTB = reg2 | 0b00000011;
+//            break;
+//        case 7:    //1001
+//            PORTD = reg1 | 0b01001000;
+//            PORTB = reg2 | 0b00000010;
+//            break;
+//    }
+//}
+
+void Stepper_28BYJ::stepMotorsOpposite(int thisStep) {
+    byte reg2, reg1;
+    reg1 = PORTD & 0b00000011; // 0 и 1 биты PORTD соотв. выводам RT TX, т.е. отвечают за сериал.
+    reg2 = PORTB & 0b11111100;
+    switch (thisStep) {
+        case 0:    // 0001
+            PORTD = reg1 | 0b01000100;
+            PORTB = reg2 | 0b00000010;
+            break;
+        case 1:    // 0011
+            PORTD = reg1 | 0b00001100;
+            PORTB = reg2 | 0b00000010;
+            break;
+        case 2:    //0010
+            PORTD = reg1 | 0b00001000;
+            PORTB = reg2 | 0b00000011;
+            break;
+        case 3:    //0110
+            PORTD = reg1 | 0b00011000;
+            PORTB = reg2 | 0b00000001;
+            break;
+        case 4:    // 0100
+            PORTD = reg1 | 0b10010000;
+            PORTB = reg2 | 0b00000001;
+            break;
+        case 5:    // 1100
+            PORTD = reg1 | 0b10110000;
+            PORTB = reg2 | 0b00000000;
+            break;
+        case 6:    //1000
+            PORTD = reg1 | 0b10100000;
+            PORTB = reg2 | 0b00000000;
+            break;
+        case 7:    //1001
+            PORTD = reg1 | 0b11100100;
+            PORTB = reg2 | 0b00000000;
+            break;
+    }
+}
+
+
+void Stepper_28BYJ::setStepsPerTurn(int stepsPerTurn) {
+    this->stepsPerTurn = stepsPerTurn;
+}
+
+
