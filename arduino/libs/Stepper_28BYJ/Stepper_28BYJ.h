@@ -42,7 +42,7 @@
 #define COUNTERCLOCKWISE 0
 #define FORWARD 1
 #define BACKWARD 0
-#define LEAST_DELAY 1
+#define LEAST_DELAY 10
 
 // описание интерфейса библиотеки
 class Stepper_28BYJ {
