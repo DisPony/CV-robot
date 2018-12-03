@@ -237,7 +237,7 @@ void moveTest(int distance){
   //moveMotor(LEFT_MOTOR, distance);
   //moveForward(50);
   //moveMotor(LEFT_MOTOR, 50);
-  leftMotor.step(distance);
+  leftMotor.move(distance);
   //PORTD = PORTD | 0b00111100;
   //delay(100000);
 }
@@ -251,7 +251,8 @@ void loop(){
 #endif
   
 #ifdef MOVETEST
-  moveTest(50);
+  moveTest(500);
+  delay(1000);
 #endif
 
 #ifdef ROBOTTURNTEST
