@@ -90,7 +90,7 @@ void Stepper_28BYJ::turnCounterclockwise(int stepsToTurn) {
  */
 void Stepper_28BYJ::turnClockwise(int stepsToTurn) {
     int stepsPassed = 0;
-    while(stepsPassed < stepsToMove){
+    while(stepsPassed < stepsToTurn){
         delayMicroseconds(LEAST_DELAY);
         stepMotors(stepsPassed % 8);
         stepsPassed++;
@@ -135,7 +135,7 @@ void Stepper_28BYJ::moveBackward(int stepsToMove) {
     int stepsLeft = stepsToMove;
     while(stepsLeft > 0){
         delayMicroseconds(LEAST_DELAY);
-        stepMotorsOpposite(stepsPassed % 8);
+        stepMotorsOpposite(stepsLeft % 8);
         stepsLeft--;
     }
 }
