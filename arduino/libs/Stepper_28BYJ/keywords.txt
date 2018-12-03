@@ -12,7 +12,7 @@ Stepper	KEYWORD1
 # Methods and Functions (KEYWORD2)
 #######################################
 
-step	KEYWORD2
+move	KEYWORD2
 setSpeed	KEYWORD2
 version	KEYWORD2
 

@@ -29,9 +29,19 @@ DEFAULT_V_ANGLE = 0
 # Stepper constants
 
 # Steps per turn (360")
-STEPS = 4076
+STEPS_PER_TURN = 4076
 
-LEFT_WHEEL_RADIUS = 5
-RIGHT_WHEEL_RADIUS = 5
+WHEEL_RADIUS = 6.5
 
 # ------------------------------------------------------------------------ #
+
+# Corresponds to function setPosition(vertical, horizontal)
+# on Arduino.
+SERVO = 1
+
+# Corresponds to function motor.move(steps)
+MOVE = 2
+
+# Corresponds to function motor.turn(steps)
+TURN = 3
+

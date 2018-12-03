@@ -3,6 +3,7 @@
     <words>
       <w>arduino</w>
       <w>baudrate</w>
+      <w>retval</w>
     </words>
   </dictionary>
 </component>
