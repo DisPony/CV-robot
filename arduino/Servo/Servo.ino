@@ -37,7 +37,7 @@ Stepper_28BYJ leftMotor(maskD, maskB);
 //------------------------------------------------------------------------//
 
 long longFromByte(byte* arr, byte offset){
-  return (arr[offset + 0] << 24) + (arr[offset + 1] << 16) + (arr[offset + 2] << 8) + b[offset + 3];
+  return (arr[offset + 0] << 24) + (arr[offset + 1] << 16) + (arr[offset + 2] << 8) + arr[offset + 3];
 }
 
 //------------------------------------------------------------------------//
