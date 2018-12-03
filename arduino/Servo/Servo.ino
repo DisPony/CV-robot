@@ -44,7 +44,7 @@ int ONE_RATE_DELAY = 1000 / MAX_RPM;
 
 
 byte maskD = 11111100;
-byte maskB = 00000011
+byte maskB = 00000011;
 
 Stepper_28BYJ leftMotor(maskD, maskB);
 float LEFT_WHEEL_RADIUS = 5;
