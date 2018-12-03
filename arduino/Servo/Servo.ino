@@ -28,9 +28,9 @@ byte DEFAULT_V_ANGLE = 0;
 byte maskD = 11111100;
 byte maskB = 00000011;
 
-byte SERVO = 1;
-byte MOVE = 2;
-byte TURN = 3;
+const byte SERVO = 1;
+const byte MOVE = 2;
+const byte TURN = 3;
 
 Stepper_28BYJ leftMotor(maskD, maskB);
 
@@ -246,12 +246,12 @@ void loop(){
       setPosition(arg1, arg2);
       break;
     case MOVE:
-      long arg1 = longFromByte(buf, 1);
-      leftMotor.move(arg1);
+      long arg3 = longFromByte(buf, 1);
+      leftMotor.move(arg3);
       break;
     case TURN:
-      long arg1 = longFromByte(buf, 1);
-      leftMotor.turn(arg1);
+      long arg3 = longFromByte(buf, 1);
+      leftMotor.turn(arg3);
       break;
     }
 
