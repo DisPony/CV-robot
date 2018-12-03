@@ -213,7 +213,7 @@ void driveTest(){
 
 void moveTest(int distance){
   leftMotor.move(distance);
-  delay(1000);
+  //delay(1000);
   //leftMotor.turn(distance / 10);
 }
 
