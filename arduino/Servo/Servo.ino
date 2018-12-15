@@ -178,7 +178,7 @@ int turnRobotParallel(float angle){
 */ 
 //------------------------------------------------------------------------//
 
-//#define MOVETEST
+#define MOVETEST
 //#define ROBOTTURNTEST
 //#define SETPOSITIONTEST
 //#define SERIALTEST
@@ -215,6 +215,7 @@ void driveTest(){
 void moveTest(int distance){
   //leftMotor.move(distance);
   //delay(1000);
+  leftMotor.move(distance);
   leftMotor.turn(distance);
 }
 

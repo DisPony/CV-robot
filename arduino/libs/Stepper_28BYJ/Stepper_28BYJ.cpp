@@ -203,7 +203,7 @@ void Stepper_28BYJ::move(int stepsToMove) {
  *   одинаковые сигналы.
  *
  */
-void Stepper_28BYJ::stepMotors(int thisStep) {
+void Stepper_28BYJ::stepMotorsOpposite(int thisStep) {
     byte reg2, reg1;
     reg1 = PORTD & 0b00000011; // 0 и 1 биты PORTD соотв. выводам RT TX, т.е. отвечают за сериал.
     reg2 = PORTB & 0b11111100;
@@ -260,7 +260,7 @@ void Stepper_28BYJ::stepMotors(int thisStep) {
  * Для другого - симметричные ( 0001 - 1001, 0011 - 1000 и т.д.)
  */
 
-void Stepper_28BYJ::stepMotorsOpposite(int thisStep) {
+void Stepper_28BYJ::stepMotors(int thisStep) {
     byte reg2, reg1;
     reg1 = PORTD & 0b00000011; // 0 и 1 биты PORTD соотв. выводам RT TX, т.е. отвечают за сериал.
     reg2 = PORTB & 0b11111100;
