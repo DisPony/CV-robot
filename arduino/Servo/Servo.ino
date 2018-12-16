@@ -242,10 +242,10 @@ void SerialInteraction::proceed() {
                 setPosition(buf[1], buf[2]);
                 break;
             case MOVE:
-                wheels.move(longFromByte(&buf, 0), longFromByte(&buf, 4));
+                wheels.move(longFromByte(buf, 0), longFromByte(buf, 4));
                 break;
             case TURN:
-                wheels.turn(longFromByte(&buf, 0), longFromByte(&buf, 4));
+                wheels.turn(longFromByte(buf, 0), longFromByte(buf, 4));
                 break;
             default:
                 Serial.write("SOMETHING WENT WRONG");
