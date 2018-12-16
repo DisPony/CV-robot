@@ -16,7 +16,7 @@ while True:
     elif(ch == "s"):
         myRobot.move(-500)
     elif(ch == "d"):
-        myRobot.turn(500)
+        myRobot.turn(45)
     elif(ch == "a"):
-        myRobot.turn(-500)
+        myRobot.turn(-45)
     print myRobot.answer()

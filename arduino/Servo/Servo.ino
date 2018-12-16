@@ -261,7 +261,7 @@ void SerialInteraction::proceed() {
 void loop(){
   
 #ifdef MOVETEST
-  moveTest(5000);
+  moveTest(500);
   //delay(1000);
 #endif
 
