@@ -236,23 +236,23 @@ void moveTest(int distance){
 void SerialInteraction::proceed() {
     if(Serial.available() >= 9){
         byte func = Serial.read();
-        long testArg1 = Serial.parseInt();
-        long testArg2 = Serial.parseInt();
-        //byte buf[8];
-        //Serial.readBytes(buf, 8);
+        //long testArg1 = Serial.parseInt();
+        //long testArg2 = Serial.parseInt();
+        byte buf[8];
+        Serial.readBytes(buf, 8);
         switch(func){
             case SERVO:
                 setPosition(testArg1, testArg2);
                 break;
             case MOVE:
-                wheels.move(testArg1);
-                Serial.print(testArg1);
-                Serial.print(testArg2);
+                wheels.move(longFromByte(buf, 0));
+                Serial.print(longFromByte(buf, 0));
+                Serial.print(longFromByte(buf, 4));
                 break;
             case TURN:
-                wheels.turn(testArg1);
-                Serial.print(testArg1);
-                Serial.print(testArg2);
+                wheels.turn(longFromByte(buf, 0));
+                Serial.print(longFromByte(buf, 0));
+                Serial.print(longFromByte(buf, 4));
                 break;
             default:
                 //Serial.write("SOMETHING WENT WRONG");
