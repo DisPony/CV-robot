@@ -6,6 +6,7 @@
 //------------------------------------------------------------------------//
 
 class SerialInteraction : public Interaction {
+public:
     void proceed();
 };
 

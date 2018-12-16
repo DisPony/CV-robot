@@ -39,6 +39,8 @@
 #ifndef LIBS_DUALSTEPPER_H
 #define LIBS_DUALSTEPPER_H
 
+#include "Interaction.h"
+
 #define CLOCKWISE 1
 #define COUNTERCLOCKWISE 0
 #define FORWARD 1
@@ -55,7 +57,7 @@
 // описание интерфейса библиотеки
 class DualStepper {
 public:
-    DualStepper(byte maskPortD, byte maskPortB);
+    DualStepper(byte maskPortD, byte maskPortB, Interaction interaction);
 
     virtual void move(int stepsToMove);
 
