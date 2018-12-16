@@ -57,6 +57,9 @@ class Robot:
         command = utilities.get_command(TURN, required_steps)
         self.ser.write(command)
 
+    def answer(self):
+        return str(self.ser.read_all())
+
 
 
 
