@@ -20,6 +20,11 @@ def int_to_bytes(n):
     ##return bytes(b)  # uncomment if you need
     return b
 
+def byte_to_bytes(n):
+    b = bytearray([0])
+    b[0] = n & 0xFF
+    return b
+
 
 def bytes_to_int(b, offset):
     n = (b[offset + 0] << 24) + (b[offset + 1] << 16) + (b[offset + 2] << 8) + b[offset + 3]
@@ -44,16 +49,16 @@ def bound(lower, upper, value):
 def get_command(function_num, *args):
     command = bytearray()
     if function_num == SERVO:
-        command += bytearray(SERVO)
+        command += byte_to_bytes(SERVO)
         command += int_to_bytes(args[0])
         command += int_to_bytes(args[1])
     elif function_num == MOVE:
-        command += bytearray(MOVE)
+        command += byte_to_bytes(MOVE)
         command += int_to_bytes(args[0])
         command += int_to_bytes(0)
     elif function_num == TURN:
-        command += bytearray(TURN)
+        command += byte_to_bytes(TURN)
         command += int_to_bytes(args[0])
         command += int_to_bytes(0)
-
+    print(command)
     return command
