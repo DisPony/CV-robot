@@ -41,7 +41,7 @@ const byte SERVO = 1;
 const byte MOVE = 2;
 const byte TURN = 3;
 
-SerialInteraction interaction = new SerialInteraction();
+SerialInteraction* interaction = new SerialInteraction();
 
 ResponsiveDualStepper wheels(maskD, maskB, interaction);
 
