@@ -189,10 +189,10 @@ int turnRobotParallel(float angle){
 */ 
 //------------------------------------------------------------------------//
 
-//#define MOVETEST
+#define MOVETEST
 //#define ROBOTTURNTEST
 //#define SETPOSITIONTEST
-#define SERIALTEST
+//#define SERIALTEST
 #define DEBUG
 //#define DRIVETEST
 
@@ -228,7 +228,9 @@ void moveTest(int distance){
   //leftMotor.move(distance);
   //delay(1000);
     wheels.move(distance);
-    //wheels.turn(distance);
+    wheels.move(-distance);
+    wheels.turn(distance);
+    wheels.turn(-distance);
 }
 
 //------------------------------------------------------------------------//
@@ -267,7 +269,7 @@ void loop(){
   
 #ifdef MOVETEST
     delay(1000);
-  moveTest(49901);
+  moveTest(5000);
     delay(1000);
 #endif
 
