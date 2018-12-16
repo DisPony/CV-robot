@@ -242,7 +242,7 @@ void SerialInteraction::proceed() {
         Serial.readBytes(buf, 8);
         switch(func){
             case SERVO:
-                setPosition(testArg1, testArg2);
+                setPosition(longFromByte(buf, 0), longFromByte(buf, 4));
                 break;
             case MOVE:
                 wheels.move(longFromByte(buf, 0));
