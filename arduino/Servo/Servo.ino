@@ -245,12 +245,9 @@ void SerialInteraction::proceed() {
                 break;
             case MOVE:
                 wheels.move(longFromByte(buf, 0));
-                Serial.print(longFromByte(buf, 0));
-                Serial.print(longFromByte(buf, 4));
                 break;
             case TURN:
                 wheels.turn(longFromByte(buf, 0));
-
                 break;
             default:
                 //Serial.write("SOMETHING WENT WRONG");
