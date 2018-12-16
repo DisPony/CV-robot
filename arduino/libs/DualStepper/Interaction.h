@@ -8,7 +8,7 @@
 
 class Interaction {
 public:
-    virtual void proceed() = 0;
+    virtual void proceed();
 };
 
 

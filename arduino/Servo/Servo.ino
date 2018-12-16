@@ -46,7 +46,7 @@ DualStepper wheels(maskD, maskB, interaction);
 
 //------------------------------------------------------------------------//
 
-long longFromByte(byte* arr, byte offset){
+long int longFromByte(byte* arr, byte offset){
   return (arr[offset + 0] << 24) + (arr[offset + 1] << 16) + (arr[offset + 2] << 8) + arr[offset + 3];
 }
 
@@ -233,7 +233,7 @@ void moveTest(int distance){
 
 
 void SerialInteraction::proceed() {
-    if(Serial.available >= 9){
+    if(Serial.available() >= 9){
         byte func = Serial.read();
         byte buf[8];
         Serial.readBytes(buf, 8);
@@ -242,10 +242,10 @@ void SerialInteraction::proceed() {
                 setPosition(buf[1], buf[2]);
                 break;
             case MOVE:
-                wheels.move(longFromByte(buf, 0), longFromByte(buf, 4));
+                wheels.move(longFromByte(buf, 0));
                 break;
             case TURN:
-                wheels.turn(longFromByte(buf, 0), longFromByte(buf, 4));
+                wheels.turn(longFromByte(buf, 0));
                 break;
             default:
                 Serial.write("SOMETHING WENT WRONG");
