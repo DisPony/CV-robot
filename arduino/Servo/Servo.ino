@@ -195,6 +195,7 @@ int turnRobotParallel(float angle){
 //#define SERIALTEST
 #define DEBUG
 //#define DRIVETEST
+#define BASIC_DELAY 2500
 
 void setPositionTest(byte vertical, byte horizontal){
   setPosition(vertical, horizontal);
@@ -214,27 +215,37 @@ void driveTest(){
       servoHorizontal.write(i);
       delay(200);
     }
-    delay(3000);
+    delay(BASIC_DELAY);
     servoHorizontal.write(DEFAULT_H_ANGLE);
     for(byte i = MIN_V_ANGLE; i != MAX_V_ANGLE; i++){
       servoVertical.write(i);
       delay(200); 
     }
-    delay(3000);
+    delay(BASIC_DELAY);
     servoVertical.write(DEFAULT_V_ANGLE);
 }
 
+/*
+ * Expect:
+ * 0. Колеса вращаются вперед
+ * 1. Колеса вращаются назад
+ * 2. Правое колесо вращается назад, левое - вперед
+ * 3. Правое колесо вращается вперед, левое - назад
+ *  (Робот едет вперед, назад, поворачивается направо, налево
+ *  в итоге оказывается в исходном положении)
+ */
 void moveTest(int distance){
-  //leftMotor.move(distance);
-  //delay(1000);
     wheels.move(distance);
+    delay(BASIC_DELAY);
     wheels.move(-distance);
+    delay(BASIC_DELAY);
     wheels.turn(distance);
+    delay(BASIC_DELAY);
     wheels.turn(-distance);
+    delay(BASIC_DELAY);
 }
 
 //------------------------------------------------------------------------//
-
 
 void SerialInteraction::proceed() {
     if(Serial.available() >= 9){
@@ -261,7 +272,6 @@ void SerialInteraction::proceed() {
 #endif
     }
 }
-
 
 //------------------------------------------------------------------------//
 

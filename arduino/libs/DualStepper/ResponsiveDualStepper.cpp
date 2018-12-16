@@ -8,6 +8,7 @@
 ResponsiveDualStepper::ResponsiveDualStepper(byte maskPortD, byte maskPortB, Interaction* interaction)
         : DualStepper(maskPortD, maskPortB), interaction(interaction) {}
 
+//
 void ResponsiveDualStepper::move(long stepsToMove) {
     int stepsLeft = abs(stepsToMove);
     int direction = stepsToMove > 0? FORWARD : BACKWARD;
