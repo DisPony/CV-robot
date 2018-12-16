@@ -20,7 +20,7 @@ void ResponsiveDualStepper::move(long stepsToMove) {
             stepsPart = stepsLeft;
             stepsLeft = 0;
         }
-        DualStepper::move(stepsPart);
+        DualStepper::move(stepsPart * direction);
         interaction->proceed();
     }
 

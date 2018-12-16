@@ -193,6 +193,7 @@ int turnRobotParallel(float angle){
 //#define ROBOTTURNTEST
 //#define SETPOSITIONTEST
 #define SERIALTEST
+#define DEBUG
 //#define DRIVETEST
 
 void setPositionTest(byte vertical, byte horizontal){
@@ -236,8 +237,6 @@ void moveTest(int distance){
 void SerialInteraction::proceed() {
     if(Serial.available() >= 9){
         byte func = Serial.read();
-        //long testArg1 = Serial.parseInt();
-        //long testArg2 = Serial.parseInt();
         byte buf[8];
         Serial.readBytes(buf, 8);
         switch(func){
@@ -251,14 +250,16 @@ void SerialInteraction::proceed() {
                 break;
             case TURN:
                 wheels.turn(longFromByte(buf, 0));
-                Serial.print(longFromByte(buf, 0));
-                Serial.print(longFromByte(buf, 4));
+
                 break;
             default:
                 //Serial.write("SOMETHING WENT WRONG");
                 break;
         }
-
+#ifdef DEBUG
+        Serial.print(longFromByte(buf, 0));
+        Serial.print(longFromByte(buf, 4));
+#endif
     }
 }
 
