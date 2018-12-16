@@ -254,6 +254,7 @@ void SerialInteraction::proceed() {
                 //Serial.write("SOMETHING WENT WRONG");
                 break;
         }
+
     }
 }
 

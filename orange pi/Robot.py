@@ -49,12 +49,14 @@ class Robot:
         required_steps = distance / (2 * math.pi * WHEEL_RADIUS) * STEPS_PER_TURN
         required_steps = int(required_steps)
         command = utilities.get_command(MOVE, required_steps)
+        print required_steps
         self.ser.write(command)
 
     def turn(self, angle):
         required_steps = STEPS_PER_TURN * (360 / angle)
         required_steps = int(required_steps)
         command = utilities.get_command(TURN, required_steps)
+        print required_steps
         self.ser.write(command)
 
     def answer(self):
