@@ -249,7 +249,7 @@ void SerialInteraction::proceed() {
                 wheels.turn(longFromByte(buf, 0));
                 break;
             default:
-                Serial.write("SOMETHING WENT WRONG");
+                //Serial.write("SOMETHING WENT WRONG");
                 break;
         }
     }

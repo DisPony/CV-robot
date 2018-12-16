@@ -19,4 +19,4 @@ while True:
         myRobot.turn(45)
     elif(ch == "a"):
         myRobot.turn(-45)
-    print myRobot.answer()
+    # print myRobot.answer()
