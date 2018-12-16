@@ -15,7 +15,7 @@ def int_to_bytes(n):
     n >>= 8
     b[0] = n & 0xFF
 
-    print(b)
+    print b
     # Return the result or as bytearray or as bytes (commented out)
     ##return bytes(b)  # uncomment if you need
     return b
