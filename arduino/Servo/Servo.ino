@@ -279,7 +279,7 @@ void loop(){
 #endif
 
 #ifdef SERIALTEST
-    interaction.proceed();
+    interaction->proceed();
 #endif
 
 }
