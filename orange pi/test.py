@@ -12,7 +12,9 @@ def int_to_bytes(n):
     n >>= 8
     b[0] = n & 0xFF
 
-    print(b)
+    for byte in b:
+        print(bin(byte))
+    # print(b)
     # Return the result or as bytearray or as bytes (commented out)
     ##return bytes(b)  # uncomment if you need
     return b
@@ -24,17 +26,18 @@ def bytes_to_int(b, offset):
 
 
 func = bytearray([1])
-arg1 = int_to_bytes(25555)
+arg1 = int_to_bytes(49901)
+print(bin(49901))
 arg2 = int_to_bytes(12345)
 
 
 # Можно складывать bytearray при помощи плюсика
 command = func + arg1 + arg2
-print(command)
+# print(command)
 
 # for byte in command:
 #     print(byte)
 
 num = 256
-print(bin(num))
-print(bin(num & 0xFF))
+# print(bin(num))
+# print(bin(num & 0xFF))
