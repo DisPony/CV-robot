@@ -43,7 +43,8 @@ const byte TURN = 3;
 
 SerialInteraction* interaction = new SerialInteraction();
 
-ResponsiveDualStepper wheels(maskD, maskB, interaction);
+//ResponsiveDualStepper wheels(maskD, maskB, interaction);
+DualStepper wheels(maskD, maskB);
 
 //------------------------------------------------------------------------//
 
