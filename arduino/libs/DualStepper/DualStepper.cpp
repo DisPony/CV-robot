@@ -59,7 +59,7 @@ DualStepper::DualStepper(byte maskPortD, byte maskPortB) {
  * должна вращать оба колеса по часовой стрелке
  */
 void DualStepper::turnCounterclockwise(long stepsToTurn) {
-    int stepsLeft = stepsToTurn;
+    long stepsLeft = stepsToTurn;
     while (stepsLeft > 0){
         delayMicroseconds(LEAST_DELAY);
         stepMotors(stepsLeft % 8);
@@ -73,7 +73,7 @@ void DualStepper::turnCounterclockwise(long stepsToTurn) {
  * должна вращать оба колеса против часовой стрелки
  */
 void DualStepper::turnClockwise(long stepsToTurn) {
-    int stepsPassed = 0;
+    long stepsPassed = 0;
     while(stepsPassed < stepsToTurn){
         delayMicroseconds(LEAST_DELAY);
         stepMotors(stepsPassed % 8);
@@ -91,7 +91,7 @@ void DualStepper::turn(long stepsToTurn) {
     if(direction == CLOCKWISE){
         turnClockwise(stepsToTurn);
     } else if (direction == COUNTERCLOCKWISE){
-        turnCounterclockwise(stepsToTurn);
+        turnCounterclockwise(stepsToTurn * -1);
     }
 }
 
@@ -103,7 +103,7 @@ void DualStepper::turn(long stepsToTurn) {
  * а правое - по часовой.
  */
 void DualStepper::moveForward(long stepsToMove) {
-    int stepsPassed = 0;
+    long stepsPassed = 0;
     while(stepsPassed < stepsToMove){
         delayMicroseconds(LEAST_DELAY);
         stepMotorsOpposite(stepsPassed % 8);
@@ -117,7 +117,7 @@ void DualStepper::moveForward(long stepsToMove) {
  * а правое - против часовой
  */
 void DualStepper::moveBackward(long stepsToMove) {
-    int stepsLeft = stepsToMove;
+    long stepsLeft = stepsToMove;
     while(stepsLeft > 0){
         delayMicroseconds(LEAST_DELAY);
         stepMotorsOpposite(stepsLeft % 8);
@@ -137,7 +137,7 @@ void DualStepper::move(long stepsToMove) {
     if(direction == FORWARD){
         moveForward(stepsToMove);
     } else if (direction == BACKWARD){
-        moveBackward(stepsToMove);
+        moveBackward(stepsToMove * -1);
     }
 }
 

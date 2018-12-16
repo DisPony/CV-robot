@@ -236,13 +236,13 @@ void driveTest(){
  *  в итоге оказывается в исходном положении)
  */
 void moveTest(int distance){
-    wheels.move(distance);
+    wheels.move(5000);
     delay(BASIC_DELAY);
-    wheels.move(-1*distance);
+    wheels.move(-5000);
     delay(BASIC_DELAY);
-    wheels.turn(distance);
+    wheels.turn(5000);
     delay(BASIC_DELAY);
-    wheels.turn(-1*distance);
+    wheels.turn(-5000);
     delay(BASIC_DELAY);
 }
 
