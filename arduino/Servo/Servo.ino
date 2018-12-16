@@ -238,11 +238,11 @@ void driveTest(){
 void moveTest(int distance){
     wheels.move(distance);
     delay(BASIC_DELAY);
-    wheels.move(-distance);
+    wheels.move(-1*distance);
     delay(BASIC_DELAY);
     wheels.turn(distance);
     delay(BASIC_DELAY);
-    wheels.turn(-distance);
+    wheels.turn(-1*distance);
     delay(BASIC_DELAY);
 }
 
