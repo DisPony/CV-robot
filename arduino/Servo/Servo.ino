@@ -247,10 +247,12 @@ void SerialInteraction::proceed() {
             case MOVE:
                 wheels.move(testArg1);
                 Serial.print(testArg1);
+                Serial.print(testArg2);
                 break;
             case TURN:
                 wheels.turn(testArg1);
                 Serial.print(testArg1);
+                Serial.print(testArg2);
                 break;
             default:
                 //Serial.write("SOMETHING WENT WRONG");
