@@ -227,7 +227,7 @@ void moveTest(int distance){
   //leftMotor.move(distance);
   //delay(1000);
     wheels.move(distance);
-    wheels.turn(distance);
+    //wheels.turn(distance);
 }
 
 //------------------------------------------------------------------------//
@@ -268,8 +268,9 @@ void SerialInteraction::proceed() {
 void loop(){
   
 #ifdef MOVETEST
-  moveTest(500);
-  delay(1000);
+    delay(1000);
+  moveTest(49901);
+    delay(1000);
 #endif
 
 #ifdef DRIVETEST
