@@ -8,9 +8,9 @@
 
 class ResponsiveDualStepper : public DualStepper {
 private:
-Interaction interaction;
+Interaction* interaction;
 public:
-    ResponsiveDualStepper(byte maskPortD, byte maskPortB, Interaction interaction);
+    ResponsiveDualStepper(byte maskPortD, byte maskPortB, Interaction* interaction);
     void move(int stepsToMove) override;
     void turn(int stepsToTurn) override;
 };

@@ -5,7 +5,7 @@
 
 #define STEPS_BETWEEN_AVAILABILITY 500
 
-ResponsiveDualStepper::ResponsiveDualStepper(byte maskPortD, byte maskPortB, Interaction interaction)
+ResponsiveDualStepper::ResponsiveDualStepper(byte maskPortD, byte maskPortB, Interaction* interaction)
         : DualStepper(maskPortD, maskPortB), interaction(interaction) {}
 
 void ResponsiveDualStepper::move(int stepsToMove) {
