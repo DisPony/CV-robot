@@ -44,15 +44,15 @@ def bound(lower, upper, value):
 def get_command(function_num, *args):
     command = bytearray()
     if function_num == SERVO:
-        command[0] = SERVO
+        command += SERVO
         command += int_to_bytes(args[0])
         command += int_to_bytes(args[1])
     elif function_num == MOVE:
-        command[0] = MOVE
+        command += MOVE
         command += int_to_bytes(args[0])
         command += int_to_bytes(0)
     elif function_num == TURN:
-        command[0] = TURN
+        command += TURN
         command += int_to_bytes(args[0])
         command += int_to_bytes(0)
 
