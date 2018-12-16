@@ -26,7 +26,8 @@
  */
 
 
-#include "Arduino.h"
+#include "../arduino/Arduino.h"
+#include "../arduino/binary.h"
 #include "DualStepper.h"
 
 
@@ -288,6 +289,3 @@ void DualStepper::stepMotors(int thisStep) {
 }
 
 
-void DualStepper::setStepsPerTurn(int stepsPerTurn) {
-    this->stepsPerTurn = stepsPerTurn;
-}

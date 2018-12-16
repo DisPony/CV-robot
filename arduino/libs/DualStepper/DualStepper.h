@@ -39,6 +39,8 @@
 #ifndef LIBS_DUALSTEPPER_H
 #define LIBS_DUALSTEPPER_H
 
+//#include <../arduino/binary.h>
+#include "../arduino/Arduino.h"
 #include "Interaction.h"
 
 #define CLOCKWISE 1
@@ -57,7 +59,7 @@
 // описание интерфейса библиотеки
 class DualStepper {
 public:
-    DualStepper(byte maskPortD, byte maskPortB, Interaction interaction);
+    DualStepper(byte maskPortD, byte maskPortB);
 
     virtual void move(int stepsToMove);
 

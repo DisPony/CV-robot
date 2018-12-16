@@ -21,9 +21,7 @@ void ResponsiveDualStepper::move(int stepsToMove) {
             stepsLeft = 0;
         }
         DualStepper::move(stepsPart);
-        if(Serial.available()){
-            interaction.proceed();
-        }
+        interaction.proceed();
     }
 
 }
