@@ -44,9 +44,9 @@
 #include "Interaction.h"
 
 #define CLOCKWISE 1
-#define COUNTERCLOCKWISE (-1)
+#define COUNTERCLOCKWISE 0
 #define FORWARD 1
-#define BACKWARD (-1)
+#define BACKWARD 0
 
 // Задержка между шагами двигателя
 // Можно использовать для ускорения-замедления, 
