@@ -8,7 +8,7 @@
 ResponsiveDualStepper::ResponsiveDualStepper(byte maskPortD, byte maskPortB, Interaction* interaction)
         : DualStepper(maskPortD, maskPortB), interaction(interaction) {}
 
-void ResponsiveDualStepper::move(int stepsToMove) {
+void ResponsiveDualStepper::move(long stepsToMove) {
     int stepsLeft = abs(stepsToMove);
     int direction = stepsToMove > 0? CLOCKWISE : COUNTERCLOCKWISE;
     while(stepsLeft != 0){
@@ -26,6 +26,6 @@ void ResponsiveDualStepper::move(int stepsToMove) {
 
 }
 
-void ResponsiveDualStepper::turn(int stepsToTurn) {
+void ResponsiveDualStepper::turn(long stepsToTurn) {
     DualStepper::turn(stepsToTurn);
 }

@@ -61,27 +61,27 @@ class DualStepper {
 public:
     DualStepper(byte maskPortD, byte maskPortB);
 
-    virtual void move(int stepsToMove);
+    virtual void move(long stepsToMove);
 
-    virtual void turn(int stepsToTurn);
+    virtual void turn(long stepsToTurn);
 
 private:
 
-    void moveForward(int stepsToMove);
+    void moveForward(long stepsToMove);
 
-    void moveBackward(int stepsToMove);
+    void moveBackward(long stepsToMove);
 
-    void turnClockwise(int stepsToTurn);
+    void turnClockwise(long stepsToTurn);
 
-    void turnCounterclockwise(int stepsToTurn);
+    void turnCounterclockwise(long stepsToTurn);
 
     // Вспомогательные функции для шагания двигателя:
 
     // Езда влево-вправо
-    void stepMotors(int thisStep);
+    void stepMotors(long thisStep);
 
     // Езда взад-вперед
-    void stepMotorsOpposite(int thisStep);
+    void stepMotorsOpposite(long thisStep);
 
     // количество шагов на 1 оборот
     int stepsPerTurn;       

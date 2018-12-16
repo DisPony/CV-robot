@@ -11,8 +11,8 @@ private:
 Interaction* interaction;
 public:
     ResponsiveDualStepper(byte maskPortD, byte maskPortB, Interaction* interaction);
-    void move(int stepsToMove) override;
-    void turn(int stepsToTurn) override;
+    void move(long stepsToMove) override;
+    void turn(long stepsToTurn) override;
 };
 
 

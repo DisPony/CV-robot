@@ -58,7 +58,7 @@ DualStepper::DualStepper(byte maskPortD, byte maskPortB) {
  * При движении налево  \/ *-|___|-* | <--- вот эта тележка
  * должна вращать оба колеса по часовой стрелке
  */
-void DualStepper::turnCounterclockwise(int stepsToTurn) {
+void DualStepper::turnCounterclockwise(long stepsToTurn) {
     int stepsLeft = stepsToTurn;
     while (stepsLeft > 0){
         delayMicroseconds(LEAST_DELAY);
@@ -72,7 +72,7 @@ void DualStepper::turnCounterclockwise(int stepsToTurn) {
  * При движении направо | *-|___|-* \/ <--- вот эта тележка
  * должна вращать оба колеса против часовой стрелки
  */
-void DualStepper::turnClockwise(int stepsToTurn) {
+void DualStepper::turnClockwise(long stepsToTurn) {
     int stepsPassed = 0;
     while(stepsPassed < stepsToTurn){
         delayMicroseconds(LEAST_DELAY);
@@ -85,7 +85,7 @@ void DualStepper::turnClockwise(int stepsToTurn) {
  * Положительное - по часовой стрелке
  * Отрицательное - против часовой
  */
-void DualStepper::turn(int stepsToTurn) {
+void DualStepper::turn(long stepsToTurn) {
     int direction = stepsToTurn > 0? CLOCKWISE : COUNTERCLOCKWISE;
 
     if(direction == CLOCKWISE){
@@ -102,7 +102,7 @@ void DualStepper::turn(int stepsToTurn) {
  * должна вращать левое колесо против часовой стрелки
  * а правое - по часовой.
  */
-void DualStepper::moveForward(int stepsToMove) {
+void DualStepper::moveForward(long stepsToMove) {
     int stepsPassed = 0;
     while(stepsPassed < stepsToMove){
         delayMicroseconds(LEAST_DELAY);
@@ -116,7 +116,7 @@ void DualStepper::moveForward(int stepsToMove) {
  * должна вращать левое колесо по часовой стрелке
  * а правое - против часовой
  */
-void DualStepper::moveBackward(int stepsToMove) {
+void DualStepper::moveBackward(long stepsToMove) {
     int stepsLeft = stepsToMove;
     while(stepsLeft > 0){
         delayMicroseconds(LEAST_DELAY);
@@ -131,7 +131,7 @@ void DualStepper::moveBackward(int stepsToMove) {
  * Иначе пришлось бы добавить второй аргумент.
  * Возможно, для ясности так и стоит поступить?
  */
-void DualStepper::move(int stepsToMove) {
+void DualStepper::move(long stepsToMove) {
     int direction = stepsToMove > 0? FORWARD : BACKWARD;
 
     if(direction == FORWARD){
@@ -191,7 +191,7 @@ void DualStepper::move(int stepsToMove) {
  *   одинаковые сигналы.
  *
  */
-void DualStepper::stepMotorsOpposite(int thisStep) {
+void DualStepper::stepMotorsOpposite(long thisStep) {
     byte reg2, reg1;
     reg1 = PORTD & 0b00000011; // 0 и 1 биты PORTD соотв. выводам RT TX, т.е. отвечают за сериал.
     reg2 = PORTB & 0b11111100;
@@ -248,7 +248,7 @@ void DualStepper::stepMotorsOpposite(int thisStep) {
  * Для другого - симметричные ( 0001 - 1001, 0011 - 1000 и т.д.)
  */
 
-void DualStepper::stepMotors(int thisStep) {
+void DualStepper::stepMotors(long thisStep) {
     byte reg2, reg1;
     reg1 = PORTD & 0b00000011; // 0 и 1 биты PORTD соотв. выводам RT TX, т.е. отвечают за сериал.
     reg2 = PORTB & 0b11111100;
