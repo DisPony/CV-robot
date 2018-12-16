@@ -10,7 +10,7 @@ ResponsiveDualStepper::ResponsiveDualStepper(byte maskPortD, byte maskPortB, Int
 
 void ResponsiveDualStepper::move(int stepsToMove) {
     int stepsLeft = abs(stepsToMove);
-    int direction = stepsToTurn > 0? CLOCKWISE : COUNTERCLOCKWISE;
+    int direction = stepsToMove > 0? CLOCKWISE : COUNTERCLOCKWISE;
     while(stepsLeft != 0){
         int stepsPart;
         if(stepsLeft > STEPS_BETWEEN_AVAILABILITY){

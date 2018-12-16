@@ -43,7 +43,7 @@ const byte TURN = 3;
 
 SerialInteraction interaction;
 
-DualStepper wheels(maskD, maskB, interaction);
+ResponsiveDualStepper wheels(maskD, maskB, interaction);
 
 //------------------------------------------------------------------------//
 
