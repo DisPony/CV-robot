@@ -1,13 +1,4 @@
 /*
-  Stepper_28BYJ.cpp - - Stepper_28BYJ library for Wiring/Arduino - Version 0.4
-  Модифицированная библиотека для управления шаговым двигателем 28BYJ
-  
-  Original library     (0.1) by Tom Igoe.
-  //Two-wire modifications   (0.2) by Sebastian Gassner
-  Combination version   (0.3) by Tom Igoe and David Mellis
-  Bug fix for four-wire   (0.4) by Tom Igoe, bug fix from Noah Shibley
-  Модифицирована для 28BYJ - alex48 (www.alex48.110kpd.ru
-
   Управленине униполярным шаговым двигателем подключенным по 4-х проводной схеме.
 
   Если подключать несколько шаговых двигателей к одному микроконтроллеру,
@@ -29,24 +20,21 @@
     6	1	1	0	0
     7	1	0	0	0
     8	1	0	0	1
+ 
+    http://www.arduino.cc/en/Tutorial/Stepper_28BYJ
 
-  The circuits can be found at 
- 
-http://www.arduino.cc/en/Tutorial/Stepper_28BYJ
- 
- 
  */
 
 
+#include <rpcndr.h>
 #include "Arduino.h"
-#include "Stepper_28BYJ.h"
+#include "DualStepper.h"
 
 
-Stepper_28BYJ::Stepper_28BYJ(byte maskPortD, byte maskPortB) {
+DualStepper::DualStepper(byte maskPortD, byte maskPortB) {
     this->stepsPerTurn = 4076;    // Количество шагов на один оборот внешнего вала на 360".
     this->maskPortB = maskPortB;
     this->maskPortD = maskPortD;
-    // устанавливаем режим работы выводов на ВЫВОД
     pinMode(9, OUTPUT);
     pinMode(8, OUTPUT);
     pinMode(7, OUTPUT);
@@ -70,7 +58,7 @@ Stepper_28BYJ::Stepper_28BYJ(byte maskPortD, byte maskPortB) {
  * При движении налево  \/ *-|___|-* | <--- вот эта тележка
  * должна вращать оба колеса по часовой стрелке
  */
-void Stepper_28BYJ::turnCounterclockwise(int stepsToTurn) {
+void DualStepper::turnCounterclockwise(int stepsToTurn) {
     int stepsLeft = stepsToTurn;
     while (stepsLeft > 0){
         delayMicroseconds(LEAST_DELAY);
@@ -84,7 +72,7 @@ void Stepper_28BYJ::turnCounterclockwise(int stepsToTurn) {
  * При движении направо | *-|___|-* \/ <--- вот эта тележка
  * должна вращать оба колеса против часовой стрелки
  */
-void Stepper_28BYJ::turnClockwise(int stepsToTurn) {
+void DualStepper::turnClockwise(int stepsToTurn) {
     int stepsPassed = 0;
     while(stepsPassed < stepsToTurn){
         delayMicroseconds(LEAST_DELAY);
@@ -97,7 +85,7 @@ void Stepper_28BYJ::turnClockwise(int stepsToTurn) {
  * Положительное - по часовой стрелке
  * Отрицательное - против часовой
  */
-void Stepper_28BYJ::turn(int stepsToTurn) {
+void DualStepper::turn(int stepsToTurn) {
     int direction = stepsToTurn > 0? CLOCKWISE : COUNTERCLOCKWISE;
 
     if(direction == CLOCKWISE){
@@ -114,7 +102,7 @@ void Stepper_28BYJ::turn(int stepsToTurn) {
  * должна вращать левое колесо против часовой стрелки
  * а правое - по часовой.
  */
-void Stepper_28BYJ::moveForward(int stepsToMove) {
+void DualStepper::moveForward(int stepsToMove) {
     int stepsPassed = 0;
     while(stepsPassed < stepsToMove){
         delayMicroseconds(LEAST_DELAY);
@@ -128,7 +116,7 @@ void Stepper_28BYJ::moveForward(int stepsToMove) {
  * должна вращать левое колесо по часовой стрелке
  * а правое - против часовой
  */
-void Stepper_28BYJ::moveBackward(int stepsToMove) {
+void DualStepper::moveBackward(int stepsToMove) {
     int stepsLeft = stepsToMove;
     while(stepsLeft > 0){
         delayMicroseconds(LEAST_DELAY);
@@ -143,7 +131,7 @@ void Stepper_28BYJ::moveBackward(int stepsToMove) {
  * Иначе пришлось бы добавить второй аргумент.
  * Возможно, для ясности так и стоит поступить?
  */
-void Stepper_28BYJ::move(int stepsToMove) {
+void DualStepper::move(int stepsToMove) {
     int direction = stepsToMove > 0? FORWARD : BACKWARD;
 
     if(direction == FORWARD){
@@ -203,7 +191,7 @@ void Stepper_28BYJ::move(int stepsToMove) {
  *   одинаковые сигналы.
  *
  */
-void Stepper_28BYJ::stepMotorsOpposite(int thisStep) {
+void DualStepper::stepMotorsOpposite(int thisStep) {
     byte reg2, reg1;
     reg1 = PORTD & 0b00000011; // 0 и 1 биты PORTD соотв. выводам RT TX, т.е. отвечают за сериал.
     reg2 = PORTB & 0b11111100;
@@ -260,7 +248,7 @@ void Stepper_28BYJ::stepMotorsOpposite(int thisStep) {
  * Для другого - симметричные ( 0001 - 1001, 0011 - 1000 и т.д.)
  */
 
-void Stepper_28BYJ::stepMotors(int thisStep) {
+void DualStepper::stepMotors(int thisStep) {
     byte reg2, reg1;
     reg1 = PORTD & 0b00000011; // 0 и 1 биты PORTD соотв. выводам RT TX, т.е. отвечают за сериал.
     reg2 = PORTB & 0b11111100;
@@ -301,8 +289,6 @@ void Stepper_28BYJ::stepMotors(int thisStep) {
 }
 
 
-void Stepper_28BYJ::setStepsPerTurn(int stepsPerTurn) {
+void DualStepper::setStepsPerTurn(int stepsPerTurn) {
     this->stepsPerTurn = stepsPerTurn;
 }
-
-

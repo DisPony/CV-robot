@@ -1,6 +1,6 @@
 
 /* 
- Stepper_28BYJ Motor Control - speed control
+ DualStepper Motor Control - speed control
  
  This program drives a unipolar or bipolar stepper motor. 
  The motor is attached to digital pins 8 - 11 of the Arduino.
@@ -32,7 +32,7 @@ const int stepsPerRevolution = 4076;  // change this to fit the number of steps 
 
 
 // initialize the stepper library on pins 8 through 11:
-// инициализируем библиотеку Stepper_28BYJ на выходы 8-11
+// инициализируем библиотеку DualStepper на выходы 8-11
 Stepper_28BYJ myStepper_28BYJ(stepsPerRevolution, 8,9,10,11);            
 
 // количество шагов, которые мотор уже сделал

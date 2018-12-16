@@ -21,7 +21,7 @@
 // create an instance of the stepper class, specifying
 // the number of steps of the motor and the pins it's
 // attached to
-// создаём экземпляр класса Stepper_28BYJ,
+// создаём экземпляр класса DualStepper,
 // указываем количество шагов и какие выводы используются для управления
 Stepper_28BYJ stepper(STEPS, 8, 9, 10, 11);
 

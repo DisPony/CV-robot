@@ -1,5 +1,13 @@
 #include <Servo.h>
-#include <Stepper_28BYJ.h>
+#include <DualStepper.h>
+#include <ResponsiveDualStepper.h>
+#include <Interaction.h>
+
+//------------------------------------------------------------------------//
+
+class SerialInteraction : public Interaction {
+    void proceed();
+};
 
 //------------------------------------------------------------------------//
 
@@ -32,7 +40,9 @@ const byte SERVO = 1;
 const byte MOVE = 2;
 const byte TURN = 3;
 
-Stepper_28BYJ leftMotor(maskD, maskB);
+SerialInteraction interaction;
+
+DualStepper wheels(maskD, maskB, interaction);
 
 //------------------------------------------------------------------------//
 
@@ -178,11 +188,11 @@ int turnRobotParallel(float angle){
 */ 
 //------------------------------------------------------------------------//
 
-#define MOVETEST
+//#define MOVETEST
 //#define ROBOTTURNTEST
 //#define SETPOSITIONTEST
-//#define SERIALTEST
-#define DRIVETEST
+#define SERIALTEST
+//#define DRIVETEST
 
 void setPositionTest(byte vertical, byte horizontal){
   setPosition(vertical, horizontal);
@@ -215,9 +225,35 @@ void driveTest(){
 void moveTest(int distance){
   //leftMotor.move(distance);
   //delay(1000);
-  leftMotor.move(distance);
-  leftMotor.turn(distance);
+    wheels.move(distance);
+    wheels.turn(distance);
 }
+
+//------------------------------------------------------------------------//
+
+
+void SerialInteraction::proceed() {
+    if(Serial.available >= 9){
+        byte func = Serial.read();
+        byte buf[8];
+        Serial.readBytes(buf, 8);
+        switch(func){
+            case SERVO:
+                setPosition(buf[1], buf[2]);
+                break;
+            case MOVE:
+                wheels.move(longFromByte(&buf, 0), longFromByte(&buf, 4));
+                break;
+            case TURN:
+                wheels.turn(longFromByte(&buf, 0), longFromByte(&buf, 4));
+                break;
+            default:
+                Serial.write("SOMETHING WENT WRONG");
+                break;
+        }
+    }
+}
+
 
 //------------------------------------------------------------------------//
 
@@ -242,30 +278,7 @@ void loop(){
 #endif
 
 #ifdef SERIALTEST
-  byte servoArgV, servoArgH;
-  long moveArgSteps;
-  long turnArgSteps;
-  if(Serial.available() == 9){
-    byte buf[9];
-    Serial.readBytes(buf, 9);
-    byte func = buf[0];
-    switch(func){
-    case SERVO:
-      servoArgV = buf[1];
-      servoArgH = buf[2];
-      setPosition(servoArgV, servoArgH);
-      break;
-    case MOVE:
-      moveArgSteps = longFromByte(buf, 1);
-      leftMotor.move(moveArgSteps);
-      break;
-    case TURN:
-      turnArgSteps = longFromByte(buf, 1);
-      leftMotor.turn(turnArgSteps);
-      break;
-    }
-
-  }
+    interaction.proceed();
 #endif
 
 }

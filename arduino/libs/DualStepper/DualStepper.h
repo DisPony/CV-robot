@@ -36,8 +36,8 @@
 */
 
 // убедимся, что описание библиотеки подключается 1 раз
-#ifndef Stepper_28BYJ_h
-#define Stepper_28BYJ_h
+#ifndef LIBS_DUALSTEPPER_H
+#define LIBS_DUALSTEPPER_H
 
 #define CLOCKWISE 1
 #define COUNTERCLOCKWISE 0
@@ -53,32 +53,30 @@
 #define LEAST_DELAY 900
 
 // описание интерфейса библиотеки
-class Stepper_28BYJ {
+class DualStepper {
 public:
-    Stepper_28BYJ(byte maskPortD, byte maskPortB);
+    DualStepper(byte maskPortD, byte maskPortB);
 
-    void move(int stepsToTurn);
+    virtual void move(int stepsToMove);
+
+    virtual void turn(int stepsToTurn);
+
+private:
 
     void moveForward(int stepsToMove);
 
     void moveBackward(int stepsToMove);
 
-    void turn(int stepsToMove);
-
     void turnClockwise(int stepsToTurn);
 
     void turnCounterclockwise(int stepsToTurn);
 
-    void setStepsPerTurn(int stepsPerTurn);
-
-private:
-
     // Вспомогательные функции для шагания двигателя:
 
-    // Езда взад-вперед
+    // Езда влево-вправо
     void stepMotors(int thisStep);
 
-    // Езда влево-вправо
+    // Езда взад-вперед
     void stepMotorsOpposite(int thisStep);
 
     // количество шагов на 1 оборот
