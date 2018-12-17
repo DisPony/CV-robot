@@ -266,6 +266,7 @@ byte SerialInteraction::proceed() {
                 break;
             case ResponsiveDualStepper::STOP_MOVEMENT:
                 retval = ResponsiveDualStepper::STOP_MOVEMENT;
+                break;
             default:
 #ifdef DEBUG
                 Serial.write("SOMETHING WENT WRONG");
