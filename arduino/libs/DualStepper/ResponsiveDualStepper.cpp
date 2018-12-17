@@ -25,7 +25,7 @@ void ResponsiveDualStepper::move(long stepsToMove) {
         }
         DualStepper::move(stepsPart * direction);
         if(interaction->proceed() == STOP_MOVEMENT){
-            break;
+            stepsLeft = 0;
         }
     }
 }
@@ -44,7 +44,7 @@ void ResponsiveDualStepper::turn(long stepsToTurn) {
         }
         DualStepper::turn(stepsPart * direction);
         if(interaction->proceed() == STOP_MOVEMENT){
-            break;
+            stepsLeft = 0;
         }
     }
 }
