@@ -270,6 +270,7 @@ byte SerialInteraction::proceed() {
                 break;
         }
 #ifdef DEBUG
+        Serial.print(func);
         Serial.print(longFromByte(buf, 0));
         Serial.print(longFromByte(buf, 4));
 #endif
