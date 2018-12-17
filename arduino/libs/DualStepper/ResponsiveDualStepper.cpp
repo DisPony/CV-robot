@@ -24,6 +24,7 @@ void ResponsiveDualStepper::move(long stepsToMove) {
             stepsLeft = 0;
         }
         DualStepper::move(stepsPart * direction);
+        Serial.println(stepsPart);
         if(interaction->proceed() == STOP_MOVEMENT){
             Serial.print("MOVEMENT IS INTERRUPTED");
             stepsLeft = 0;
