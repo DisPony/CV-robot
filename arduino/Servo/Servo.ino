@@ -249,6 +249,7 @@ void moveTest(int distance){
 //------------------------------------------------------------------------//
 
 byte SerialInteraction::proceed() {
+    byte retval = 0;
     if(Serial.available() >= 9){
         byte func = Serial.read();
         byte buf[8];
@@ -264,7 +265,7 @@ byte SerialInteraction::proceed() {
                 wheels.turn(longFromByte(buf, 0));
                 break;
             case STOP_MOVEMENT:
-                return STOP_MOVEMENT;
+                retval = STOP_MOVEMENT;
             default:
 #ifdef DEBUG
                 Serial.write("SOMETHING WENT WRONG");
@@ -276,7 +277,7 @@ byte SerialInteraction::proceed() {
         Serial.print(longFromByte(buf, 0));
         Serial.print(longFromByte(buf, 4));
 #endif
-        return 0;
+        return retval;
     }
 }
 
