@@ -264,8 +264,8 @@ byte SerialInteraction::proceed() {
             case TURN:
                 wheels.turn(longFromByte(buf, 0));
                 break;
-            case STOP_MOVEMENT:
-                retval = STOP_MOVEMENT;
+            case ResponsiveDualStepper::STOP_MOVEMENT:
+                retval = ResponsiveDualStepper::STOP_MOVEMENT;
             default:
 #ifdef DEBUG
                 Serial.write("SOMETHING WENT WRONG");
