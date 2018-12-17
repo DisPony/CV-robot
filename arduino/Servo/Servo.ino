@@ -7,7 +7,7 @@
 
 class SerialInteraction : public Interaction {
 public:
-    void proceed();
+    byte proceed();
 };
 
 //------------------------------------------------------------------------//
