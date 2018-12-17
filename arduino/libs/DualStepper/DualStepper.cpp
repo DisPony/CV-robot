@@ -58,8 +58,8 @@ DualStepper::DualStepper(byte maskPortD, byte maskPortB) {
  * При движении налево  \/ *-|___|-* | <--- вот эта тележка
  * должна вращать оба колеса по часовой стрелке
  */
-void DualStepper::turnCounterclockwise(long stepsToTurn) {
-    long stepsLeft = stepsToTurn;
+void DualStepper::turnCounterclockwise(uint32_t stepsToTurn) {
+    uint32_t stepsLeft = stepsToTurn;
     while (stepsLeft > 0){
         delayMicroseconds(LEAST_DELAY);
         stepMotors(stepsLeft % 8);
@@ -72,8 +72,8 @@ void DualStepper::turnCounterclockwise(long stepsToTurn) {
  * При движении направо | *-|___|-* \/ <--- вот эта тележка
  * должна вращать оба колеса против часовой стрелки
  */
-void DualStepper::turnClockwise(long stepsToTurn) {
-    long stepsPassed = 0;
+void DualStepper::turnClockwise(uint32_t stepsToTurn) {
+    uint32_t stepsPassed = 0;
     while(stepsPassed < stepsToTurn){
         delayMicroseconds(LEAST_DELAY);
         stepMotors(stepsPassed % 8);
@@ -84,14 +84,15 @@ void DualStepper::turnClockwise(long stepsToTurn) {
  * Направление поворота определяется знаком аргумента
  * Положительное - по часовой стрелке
  * Отрицательное - против часовой
+ * 1: In "else" branch stepsToTurn is negative, but called function accept
+ * only positive argument. That's why negation is used.
  */
 void DualStepper::turn(long stepsToTurn) {
-    int direction = stepsToTurn > 0? CLOCKWISE : COUNTERCLOCKWISE;
-
-    if(direction == CLOCKWISE){
-        turnClockwise(stepsToTurn);
-    } else if (direction == COUNTERCLOCKWISE){
-        turnCounterclockwise(stepsToTurn * -1);
+    if (stepsToTurn > 0) {
+        turnClockwise(static_cast<uint32_t>(stepsToTurn));
+    } else {
+        /*1*/
+        turnCounterclockwise(static_cast<uint32_t>(-stepsToTurn));
     }
 }
 
@@ -102,8 +103,8 @@ void DualStepper::turn(long stepsToTurn) {
  * должна вращать левое колесо против часовой стрелки
  * а правое - по часовой.
  */
-void DualStepper::moveForward(long stepsToMove) {
-    long stepsPassed = 0;
+void DualStepper::moveForward(uint32_t stepsToMove) {
+    uint32_t stepsPassed = 0;
     while(stepsPassed < stepsToMove){
         delayMicroseconds(LEAST_DELAY);
         stepMotorsOpposite(stepsPassed % 8);
@@ -116,8 +117,8 @@ void DualStepper::moveForward(long stepsToMove) {
  * должна вращать левое колесо по часовой стрелке
  * а правое - против часовой
  */
-void DualStepper::moveBackward(long stepsToMove) {
-    long stepsLeft = stepsToMove;
+void DualStepper::moveBackward(uint32_t stepsToMove) {
+    uint32_t stepsLeft = stepsToMove;
     while(stepsLeft > 0){
         delayMicroseconds(LEAST_DELAY);
         stepMotorsOpposite(stepsLeft % 8);
@@ -128,16 +129,12 @@ void DualStepper::moveBackward(long stepsToMove) {
 /*
  * Для удобства направление движения определяется
  * знаком аргумента. Положительное вперед, отрицательное назад
- * Иначе пришлось бы добавить второй аргумент.
- * Возможно, для ясности так и стоит поступить?
  */
 void DualStepper::move(long stepsToMove) {
-    int direction = stepsToMove > 0? FORWARD : BACKWARD;
-
-    if(direction == FORWARD){
-        moveForward(stepsToMove);
-    } else if (direction == BACKWARD){
-        moveBackward(stepsToMove * -1);
+    if (stepsToMove > 0) {
+        moveForward(static_cast<uint32_t>(stepsToMove));
+    } else {
+        moveBackward(static_cast<uint32_t>(-stepsToMove));
     }
 }
 
@@ -191,7 +188,7 @@ void DualStepper::move(long stepsToMove) {
  *   одинаковые сигналы.
  *
  */
-void DualStepper::stepMotorsOpposite(long thisStep) {
+void DualStepper::stepMotorsOpposite(byte thisStep) {
     byte reg2, reg1;
     reg1 = PORTD & 0b00000011; // 0 и 1 биты PORTD соотв. выводам RT TX, т.е. отвечают за сериал.
     reg2 = PORTB & 0b11111100;
@@ -248,7 +245,7 @@ void DualStepper::stepMotorsOpposite(long thisStep) {
  * Для другого - симметричные ( 0001 - 1001, 0011 - 1000 и т.д.)
  */
 
-void DualStepper::stepMotors(long thisStep) {
+void DualStepper::stepMotors(byte thisStep) {
     byte reg2, reg1;
     reg1 = PORTD & 0b00000011; // 0 и 1 биты PORTD соотв. выводам RT TX, т.е. отвечают за сериал.
     reg2 = PORTB & 0b11111100;

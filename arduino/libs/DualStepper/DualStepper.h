@@ -67,21 +67,21 @@ public:
 
 private:
 
-    void moveForward(long stepsToMove);
+    void moveForward(uint32_t stepsToMove);
 
-    void moveBackward(long stepsToMove);
+    void moveBackward(uint32_t stepsToMove);
 
-    void turnClockwise(long stepsToTurn);
+    void turnClockwise(uint32_t stepsToTurn);
 
-    void turnCounterclockwise(long stepsToTurn);
+    void turnCounterclockwise(uint32_t stepsToTurn);
 
     // Вспомогательные функции для шагания двигателя:
 
     // Езда влево-вправо
-    void stepMotors(long thisStep);
+    void stepMotors(byte thisStep);
 
     // Езда взад-вперед
-    void stepMotorsOpposite(long thisStep);
+    void stepMotorsOpposite(byte thisStep);
 
     // количество шагов на 1 оборот
     int stepsPerTurn;       

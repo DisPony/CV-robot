@@ -1,7 +1,6 @@
 
 
 #include "ResponsiveDualStepper.h"
-#include "DualStepper.h"
 
 #define STEPS_BETWEEN_AVAILABILITY 500
 
@@ -28,5 +27,18 @@ void ResponsiveDualStepper::move(long stepsToMove) {
 }
 
 void ResponsiveDualStepper::turn(long stepsToTurn) {
-    DualStepper::turn(stepsToTurn);
+    int stepsLeft = abs(stepsToTurn);
+    int direction = stepsToTurn > 0? CLOCKWISE : COUNTERCLOCKWISE;
+    while(stepsLeft != 0){
+        int stepsPart;
+        if(stepsLeft > STEPS_BETWEEN_AVAILABILITY){
+            stepsPart = STEPS_BETWEEN_AVAILABILITY;
+            stepsLeft -= STEPS_BETWEEN_AVAILABILITY;
+        } else {
+            stepsPart = stepsLeft;
+            stepsLeft = 0;
+        }
+        DualStepper::turn(stepsPart * direction);
+        interaction->proceed();
+    }
 }
