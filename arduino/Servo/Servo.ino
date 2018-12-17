@@ -266,8 +266,9 @@ byte SerialInteraction::proceed() {
             case STOP_MOVEMENT:
                 return STOP_MOVEMENT;
             default:
-#ifdef 
+#ifdef DEBUG
                 Serial.write("SOMETHING WENT WRONG");
+#endif
                 break;
         }
 #ifdef DEBUG
