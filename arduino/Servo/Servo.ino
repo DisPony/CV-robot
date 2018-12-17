@@ -248,7 +248,7 @@ void moveTest(int distance){
 
 //------------------------------------------------------------------------//
 
-void SerialInteraction::proceed() {
+byte SerialInteraction::proceed() {
     if(Serial.available() >= 9){
         byte func = Serial.read();
         byte buf[8];
@@ -263,6 +263,8 @@ void SerialInteraction::proceed() {
             case TURN:
                 wheels.turn(longFromByte(buf, 0));
                 break;
+            case STOP_MOVEMENT:
+                return STOP_MOVEMENT;
             default:
                 //Serial.write("SOMETHING WENT WRONG");
                 break;
@@ -271,6 +273,7 @@ void SerialInteraction::proceed() {
         Serial.print(longFromByte(buf, 0));
         Serial.print(longFromByte(buf, 4));
 #endif
+        return 0;
     }
 }
 

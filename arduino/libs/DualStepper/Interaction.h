@@ -5,6 +5,8 @@
 #ifndef LIBS_SERIALINTERACTION_H
 #define LIBS_SERIALINTERACTION_H
 
+#define STOP_MOVEMENT 10
+
 /*
  * У Arduino нет средств для параллельного исполнения кода
  * кроме прерываний (не совсем параллельное исполнение).
@@ -14,7 +16,7 @@
  */
 class Interaction {
 public:
-    virtual void proceed()= 0;
+    virtual byte proceed()= 0;
 };
 
 

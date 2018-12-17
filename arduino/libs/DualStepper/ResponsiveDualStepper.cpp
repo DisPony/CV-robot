@@ -2,7 +2,10 @@
 
 #include "ResponsiveDualStepper.h"
 
-#define STEPS_BETWEEN_AVAILABILITY 500
+// При повороте нужно чаще проверять появление новых команд
+// т.к. при  езде 500 шагов = ~ 2-3см, но 45" поворота.
+#define STEPS_PERIOD 500
+#define TURN_PERIOD 50
 
 ResponsiveDualStepper::ResponsiveDualStepper(byte maskPortD, byte maskPortB, Interaction* interaction)
         : DualStepper(maskPortD, maskPortB), interaction(interaction) {}
@@ -13,17 +16,18 @@ void ResponsiveDualStepper::move(long stepsToMove) {
     int direction = stepsToMove > 0? FORWARD : BACKWARD;
     while(stepsLeft != 0){
         int stepsPart;
-        if(stepsLeft > STEPS_BETWEEN_AVAILABILITY){
-            stepsPart = STEPS_BETWEEN_AVAILABILITY;
-            stepsLeft -= STEPS_BETWEEN_AVAILABILITY;
+        if(stepsLeft > STEPS_PERIOD){
+            stepsPart = STEPS_PERIOD;
+            stepsLeft -= STEPS_PERIOD;
         } else {
             stepsPart = stepsLeft;
             stepsLeft = 0;
         }
         DualStepper::move(stepsPart * direction);
-        interaction->proceed();
+        if(interaction->proceed() == STOP_MOVEMENT){
+            break;
+        }
     }
-
 }
 
 void ResponsiveDualStepper::turn(long stepsToTurn) {
@@ -31,14 +35,16 @@ void ResponsiveDualStepper::turn(long stepsToTurn) {
     int direction = stepsToTurn > 0? CLOCKWISE : COUNTERCLOCKWISE;
     while(stepsLeft != 0){
         int stepsPart;
-        if(stepsLeft > STEPS_BETWEEN_AVAILABILITY){
-            stepsPart = STEPS_BETWEEN_AVAILABILITY;
-            stepsLeft -= STEPS_BETWEEN_AVAILABILITY;
+        if(stepsLeft > TURN_PERIOD){
+            stepsPart = TURN_PERIOD;
+            stepsLeft -= TURN_PERIOD;
         } else {
             stepsPart = stepsLeft;
             stepsLeft = 0;
         }
         DualStepper::turn(stepsPart * direction);
-        interaction->proceed();
+        if(interaction->proceed() == STOP_MOVEMENT){
+            break;
+        }
     }
 }
