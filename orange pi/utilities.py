@@ -20,6 +20,7 @@ def int_to_bytes(n):
     ##return bytes(b)  # uncomment if you need
     return b
 
+
 def byte_to_bytes(n):
     b = bytearray([0])
     b[0] = n & 0xFF
