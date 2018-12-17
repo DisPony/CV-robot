@@ -190,10 +190,10 @@ int turnRobotParallel(float angle){
 */ 
 //------------------------------------------------------------------------//
 
-#define MOVETEST
+//#define MOVETEST
 //#define ROBOTTURNTEST
 //#define SETPOSITIONTEST
-//#define SERIALTEST
+#define SERIALTEST
 #define DEBUG
 //#define DRIVETEST
 #define BASIC_DELAY 2500
