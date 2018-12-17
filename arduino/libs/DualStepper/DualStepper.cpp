@@ -190,6 +190,8 @@ void DualStepper::move(long stepsToMove) {
  */
 void DualStepper::stepMotorsOpposite(byte thisStep) {
     byte reg2, reg1;
+    uint8_t oldSREG = SREG;
+    cli();
     reg1 = PORTD & 0b00000011; // 0 и 1 биты PORTD соотв. выводам RT TX, т.е. отвечают за сериал.
     reg2 = PORTB & 0b11111100;
     switch (thisStep) {
@@ -226,6 +228,7 @@ void DualStepper::stepMotorsOpposite(byte thisStep) {
             PORTB = reg2 | 0b00000010;
             break;
     }
+    SREG = oldSREG;
 }
 
 
@@ -247,6 +250,8 @@ void DualStepper::stepMotorsOpposite(byte thisStep) {
 
 void DualStepper::stepMotors(byte thisStep) {
     byte reg2, reg1;
+    uint8_t oldSREG = SREG;
+    cli();
     reg1 = PORTD & 0b00000011; // 0 и 1 биты PORTD соотв. выводам RT TX, т.е. отвечают за сериал.
     reg2 = PORTB & 0b11111100;
     switch (thisStep) {
@@ -283,6 +288,7 @@ void DualStepper::stepMotors(byte thisStep) {
             PORTB = reg2 | 0b00000000;
             break;
     }
+    SREG = oldSREG;
 }
 
 
