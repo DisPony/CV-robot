@@ -62,6 +62,10 @@ class Robot:
     def answer(self):
         return str(self.ser.read_all())
 
+    def stop(self):
+        command = utilities.get_command(STOP_MOVEMENT)
+        self.ser.write(command)
+
 
 
 

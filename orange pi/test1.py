@@ -10,14 +10,17 @@ ser = serial.Serial(PORT, BAUDRATE)
 myRobot = Robot.Robot(ser)
 
 while True:
-    ch = raw_input("command: ")
+    ch, arg = raw_input("command: ").split(" ")
+    arg = int(arg)
     if(ch == "w"):
-        myRobot.move(500)
+        myRobot.move(arg)
     elif(ch == "s"):
-        myRobot.move(-500)
+        myRobot.move(-arg)
     elif(ch == "d"):
-        myRobot.turn(45)
+        myRobot.turn(arg)
     elif(ch == "a"):
-        myRobot.turn(-45)
+        myRobot.turn(-arg)
     elif(ch == "rb"):
         print myRobot.answer()
+    elif ch == "b":
+        myRobot.stop()
