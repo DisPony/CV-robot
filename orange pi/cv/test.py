@@ -40,8 +40,8 @@ for imagePath in paths.list_images(args["images"]):
         cv2.rectangle(image, (xA, yA), (xB, yB), (0, 255, 0), 2)
 
     # show some information on the number of bounding boxes
-    filename = imagePath[imagePath.rfind("/") + 1:]
-    print("[INFO] {}: {} original boxes, {} after suppression".format(filename, len(rects), len(pick)))
+    # filename = imagePath[imagePath.rfind("/") + 1:]
+    # print("[INFO] {}: {} original boxes, {} after suppression".format(filename, len(rects), len(pick)))
     # show the output images
     cv2.imwrite("hello.png", image)
-    cv2.waitKey(0)
+    # cv2.waitKey(0)
