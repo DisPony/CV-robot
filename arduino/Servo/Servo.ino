@@ -60,8 +60,8 @@ void setup() {
     Serial.write(1);
 
     servoHorizontal.attach(10);
-    pinMode(11, OUTPUT);
-    servoVertical.attach(12);
+    //pinMode(11, OUTPUT);
+    servoVertical.attach(11);
     servoHorizontal.write(DEFAULT_H_ANGLE);
     servoVertical.write(DEFAULT_V_ANGLE);
 
@@ -201,10 +201,10 @@ int turnRobotParallel(float angle){
 */
 //------------------------------------------------------------------------//
 
-//#define MOVETEST
+#define MOVETEST
 //#define ROBOTTURNTEST
 //#define SETPOSITIONTEST
-#define SERIALTEST
+//#define SERIALTEST
 #define DEBUG
 //#define DRIVETEST
 #define BASIC_DELAY 2500
@@ -251,10 +251,16 @@ void moveTest(int distance) {
     delay(BASIC_DELAY);
     wheels.move(-5000);
     delay(BASIC_DELAY);
-    wheels.turn(5000);
+    wheels.turn(1500);
     delay(BASIC_DELAY);
-    wheels.turn(-5000);
+    wheels.turn(-1500);
     delay(BASIC_DELAY);
+}
+
+void demo(){
+    moveTest(0);
+    driveTest();
+    tone(11, 600, 2000);
 }
 
 //------------------------------------------------------------------------//
