@@ -4,3 +4,4 @@ arduino/libs/.idea/
 arduino/libs/cmake-build-debug/
 
 arduino/libs/CMakeLists.txt
+orange pi/venv
