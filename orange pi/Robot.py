@@ -53,7 +53,7 @@ class Robot:
         self.ser.write(command)
 
     def turn(self, angle):
-        required_steps = STEPS_PER_TURN * (angle / 360)
+        required_steps = STEPS_PER_TURN * (angle / 360.0)
         required_steps = int(required_steps)
         command = utilities.get_command(TURN, required_steps)
         print required_steps
