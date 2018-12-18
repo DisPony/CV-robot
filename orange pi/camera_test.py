@@ -12,6 +12,7 @@ hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 while (cap.isOpened()):
     ret, frame = cap.read()
     if ret:
+        cv2.cvtColor(frame, frame, cv2.COLOR_BGR2GRAY)
         # frame = cv2.flip(frame, 0)
         (rects, weights) = hog.detectMultiScale(frame, winStride=(4, 4), padding=(8, 8), scale=1.05)
         for (x, y, w, h) in rects:
