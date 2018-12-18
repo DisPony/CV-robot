@@ -23,13 +23,13 @@ public:
  */
 
 Servo servoHorizontal; /*1*/
-byte     MAX_H_ANGLE = 180;
-byte     MIN_H_ANGLE = 0;
+byte MAX_H_ANGLE = 180;
+byte MIN_H_ANGLE = 0;
 byte DEFAULT_H_ANGLE = 90;
 
 Servo servoVertical; /*2*/
-byte     MAX_V_ANGLE = 45;
-byte     MIN_V_ANGLE = 0;
+byte MAX_V_ANGLE = 45;
+byte MIN_V_ANGLE = 0;
 byte DEFAULT_V_ANGLE = 0;
 
 //------------------------------------------------------------------------//
@@ -41,45 +41,46 @@ const byte SERVO = 1;
 const byte MOVE = 2;
 const byte TURN = 3;
 
-SerialInteraction* interaction = new SerialInteraction();
+SerialInteraction *interaction = new SerialInteraction();
 
 ResponsiveDualStepper wheels(maskD, maskB, interaction);
 //DualStepper wheels(maskD, maskB);
 
 //------------------------------------------------------------------------//
 
-long int longFromByte(byte* arr, byte offset){
-  return (arr[offset + 0] << 24) + (arr[offset + 1] << 16) + (arr[offset + 2] << 8) + arr[offset + 3];
+long int longFromByte(byte *arr, byte offset) {
+    return (arr[offset + 0] << 24) + (arr[offset + 1] << 16) + (arr[offset + 2] << 8) + arr[offset + 3];
 }
 
 //------------------------------------------------------------------------//
-void setup(){
-  Serial.begin(9600);
+void setup() {
+    Serial.begin(9600);
+    Serial.write(1);
 
-  servoHorizontal.attach(10);
-  servoVertical.attach(11);
-  servoHorizontal.write(DEFAULT_H_ANGLE);
-  servoVertical.write(DEFAULT_V_ANGLE);
+    servoHorizontal.attach(10);
+    servoVertical.attach(11);
+    servoHorizontal.write(DEFAULT_H_ANGLE);
+    servoVertical.write(DEFAULT_V_ANGLE);
 
-  delay(10000);
+    delay(10000);
 }
 //------------------------------------------------------------------------//
 
-void setVerticalAngle(byte angle){
-  if(angle <= MAX_V_ANGLE && angle >= MIN_V_ANGLE){
-    servoVertical.write(angle);
-  }
+void setVerticalAngle(byte angle) {
+    if (angle <= MAX_V_ANGLE && angle >= MIN_V_ANGLE) {
+        servoVertical.write(angle);
+    }
 }
 
-void setHorizontalAngle(byte angle){
-  if(angle <= MAX_H_ANGLE && angle >= MIN_H_ANGLE){
-    servoHorizontal.write(angle);
-  }
+void setHorizontalAngle(byte angle) {
+    if (angle <= MAX_H_ANGLE && angle >= MIN_H_ANGLE) {
+        servoHorizontal.write(angle);
+    }
 }
 
-void setPosition(byte vertical, byte horizontal){
-  setVerticalAngle(vertical);
-  setHorizontalAngle(horizontal);
+void setPosition(byte vertical, byte horizontal) {
+    setVerticalAngle(vertical);
+    setHorizontalAngle(horizontal);
 }
 
 //------------------------------------------------------------------------//
@@ -187,7 +188,7 @@ int turnRobotParallel(float angle){
   return 0;
 
 }
-*/ 
+*/
 //------------------------------------------------------------------------//
 
 //#define MOVETEST
@@ -198,9 +199,9 @@ int turnRobotParallel(float angle){
 //#define DRIVETEST
 #define BASIC_DELAY 2500
 
-void setPositionTest(byte vertical, byte horizontal){
-  setPosition(vertical, horizontal);
-  delay(2000);
+void setPositionTest(byte vertical, byte horizontal) {
+    setPosition(vertical, horizontal);
+    delay(2000);
 }
 
 /*
@@ -211,16 +212,16 @@ void setPositionTest(byte vertical, byte horizontal){
  * 3. servoHorizontal moves from initial position 
  * from forward to down
  */
-void driveTest(){
-    for(byte i = MIN_H_ANGLE; i != MAX_H_ANGLE; i++){
-      servoHorizontal.write(i);
-      delay(200);
+void driveTest() {
+    for (byte i = MIN_H_ANGLE; i != MAX_H_ANGLE; i++) {
+        servoHorizontal.write(i);
+        delay(200);
     }
     delay(BASIC_DELAY);
     servoHorizontal.write(DEFAULT_H_ANGLE);
-    for(byte i = MIN_V_ANGLE; i != MAX_V_ANGLE; i++){
-      servoVertical.write(i);
-      delay(200); 
+    for (byte i = MIN_V_ANGLE; i != MAX_V_ANGLE; i++) {
+        servoVertical.write(i);
+        delay(200);
     }
     delay(BASIC_DELAY);
     servoVertical.write(DEFAULT_V_ANGLE);
@@ -235,7 +236,7 @@ void driveTest(){
  *  (Робот едет вперед, назад, поворачивается направо, налево
  *  в итоге оказывается в исходном положении)
  */
-void moveTest(int distance){
+void moveTest(int distance) {
     wheels.move(5000);
     delay(BASIC_DELAY);
     wheels.move(-5000);
@@ -250,11 +251,11 @@ void moveTest(int distance){
 
 byte SerialInteraction::proceed() {
     byte retval = 0;
-    if(Serial.available() >= 9){
+    if (Serial.available() >= 9) {
         byte func = Serial.read();
         byte buf[8];
         Serial.readBytes(buf, 8);
-        switch(func){
+        switch (func) {
             case SERVO:
                 setPosition(longFromByte(buf, 0), longFromByte(buf, 4));
                 break;
@@ -284,8 +285,8 @@ byte SerialInteraction::proceed() {
 
 //------------------------------------------------------------------------//
 
-void loop(){
-  
+void loop() {
+
 #ifdef MOVETEST
     delay(1000);
   moveTest(5000);
@@ -293,16 +294,16 @@ void loop(){
 #endif
 
 #ifdef DRIVETEST
-  driveTest();
-  //delay(1000);
+    driveTest();
+    //delay(1000);
 #endif
 
 #ifdef ROBOTTURNTEST
-//  leftMotor.turn();
+    //  leftMotor.turn();
 #endif
 
 #ifdef SETPOSITIONTEST
-  setPositionTest(20, 120);
+    setPositionTest(20, 120);
 #endif
 
 #ifdef SERIALTEST
