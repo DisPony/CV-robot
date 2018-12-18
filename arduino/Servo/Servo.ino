@@ -265,7 +265,7 @@ void moveTest(int distance) {
 void demo(){
     moveTest(0);
     driveTest();
-    tone(11, 600, 2000);
+   // tone(11, 600, 2000);
 }
 
 //------------------------------------------------------------------------//
@@ -293,7 +293,7 @@ byte SerialInteraction::proceed() {
                 Serial.print(sonar());
                 break;
             case BEEP:
-                tone(11 ,longFromByte(buf, 0), 750);
+               // tone(11 ,longFromByte(buf, 0), 750);
                 break;
             default:
 #ifdef DEBUG
