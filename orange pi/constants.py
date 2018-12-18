@@ -45,6 +45,10 @@ MOVE = 2
 # Corresponds to function motor.turn(steps)
 TURN = 3
 
+SONAR = 4
+
+BEEP = 5
+
 # Corresponds to stop executing previous command
 STOP_MOVEMENT = 10
 

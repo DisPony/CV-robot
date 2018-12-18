@@ -40,6 +40,8 @@ byte maskB = 00000011;
 const byte SERVO = 1;
 const byte MOVE = 2;
 const byte TURN = 3;
+const byte SONAR = 4;
+const byte BEEP = 5;
 
 SerialInteraction *interaction = new SerialInteraction();
 
@@ -58,6 +60,7 @@ void setup() {
     Serial.write(1);
 
     servoHorizontal.attach(10);
+    pinMode(11, OUTPUT);
     servoVertical.attach(12);
     servoHorizontal.write(DEFAULT_H_ANGLE);
     servoVertical.write(DEFAULT_V_ANGLE);
@@ -196,7 +199,7 @@ int turnRobotParallel(float angle){
 //#define SETPOSITIONTEST
 //#define SERIALTEST
 #define DEBUG
-#define DRIVETEST
+//#define DRIVETEST
 #define BASIC_DELAY 2500
 
 void setPositionTest(byte vertical, byte horizontal) {
@@ -267,6 +270,12 @@ byte SerialInteraction::proceed() {
                 break;
             case ResponsiveDualStepper::STOP_MOVEMENT:
                 retval = ResponsiveDualStepper::STOP_MOVEMENT;
+                break;
+            case SONAR:
+                Serial.print(sonar());
+                break;
+            case BEEP:
+                tone(11 ,longFromByte(buf, 0), 750);
                 break;
             default:
 #ifdef DEBUG
