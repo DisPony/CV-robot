@@ -1,18 +1,18 @@
 from __future__ import print_function
-from imutils.object_detection import non_max_suppression
+# from imutils.object_detection import non_max_suppression
 from imutils import paths
 import numpy as np
 import argparse
 import imutils
 import cv2
 
-ap = argparse.ArgumentParser()
-ap.add_argument("-i", "--images", required=True, help="path to images directory")
-args = vars(ap.parse_args())
+# ap = argparse.ArgumentParser()
+# ap.add_argument("-i", "--images", required=True, help="path to images directory")
+# args = vars(ap.parse_args())
 hog = cv2.HOGDescriptor()
 hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
-print(list(paths.list_images(args["images"])))
-for imagePath in paths.list_images(args["images"]):
+# print(list(paths.list_images(args["images"])))
+for imagePath in paths.list_images("1.jpg"):
     # load the image and resize it to (1) reduce detection time
     # and (2) improve detection accuracy
     image = cv2.imread(imagePath)
@@ -32,10 +32,10 @@ for imagePath in paths.list_images(args["images"]):
     # fairly large overlap threshold to try to maintain overlapping
     # boxes that are still people
     rects = np.array([[x, y, x + w, y + h] for (x, y, w, h) in rects])
-    pick = non_max_suppression(rects, probs=None, overlapThresh=0.65)
+    # pick = non_max_suppression(rects, probs=None, overlapThresh=0.65)
 
     # draw the final bounding boxes
-    for (xA, yA, xB, yB) in pick:
+    for (xA, yA, xB, yB) in rects:
         print(xA, yA, xB, yB)
         cv2.rectangle(image, (xA, yA), (xB, yB), (0, 255, 0), 2)
 
