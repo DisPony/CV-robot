@@ -87,6 +87,13 @@ void setPosition(byte vertical, byte horizontal) {
 }
 
 //------------------------------------------------------------------------//
+
+byte sonar(){
+    int retval = 0;
+    return retval;
+}
+
+//------------------------------------------------------------------------//
 /*
 // Functions turn camera on *angle*
 
