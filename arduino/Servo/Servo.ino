@@ -49,7 +49,7 @@ SerialInteraction *interaction = new SerialInteraction();
 ResponsiveDualStepper wheels(maskD, maskB, interaction);
 //DualStepper wheels(maskD, maskB);
 
-NewPing sonarr(5, 4, 200);
+NewPing sonarr(A5, A4, 200);
 
 //------------------------------------------------------------------------//
 
