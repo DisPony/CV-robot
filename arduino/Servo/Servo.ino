@@ -2,7 +2,7 @@
 #include <DualStepper.h>
 #include <ResponsiveDualStepper.h>
 #include <Interaction.h>
-#include <NewPing.h>
+//#include <NewPing.h>
 
 //------------------------------------------------------------------------//
 
@@ -49,7 +49,7 @@ SerialInteraction *interaction = new SerialInteraction();
 ResponsiveDualStepper wheels(maskD, maskB, interaction);
 //DualStepper wheels(maskD, maskB);
 
-NewPing sonarr(A5, A4, 200);
+//NewPing sonarr(A5, A4, 200);
 
 //------------------------------------------------------------------------//
 
@@ -93,7 +93,7 @@ void setPosition(byte vertical, byte horizontal) {
 
 byte sonar(){
     int retval = 0;
-    retval = sonarr.ping_cm();
+    //retval = sonarr.ping_cm();
     return retval;
 }
 
