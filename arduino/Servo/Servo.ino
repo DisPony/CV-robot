@@ -2,6 +2,7 @@
 #include <DualStepper.h>
 #include <ResponsiveDualStepper.h>
 #include <Interaction.h>
+#include <NewPing.h>
 
 //------------------------------------------------------------------------//
 
@@ -48,6 +49,8 @@ SerialInteraction *interaction = new SerialInteraction();
 ResponsiveDualStepper wheels(maskD, maskB, interaction);
 //DualStepper wheels(maskD, maskB);
 
+NewPing sonarr(5, 4, 200);
+
 //------------------------------------------------------------------------//
 
 long int longFromByte(byte *arr, byte offset) {
@@ -60,8 +63,8 @@ void setup() {
     Serial.write(1);
 
     servoHorizontal.attach(10);
-    //pinMode(11, OUTPUT);
-    servoVertical.attach(11);
+    pinMode(11, OUTPUT);
+    servoVertical.attach(12);
     servoHorizontal.write(DEFAULT_H_ANGLE);
     servoVertical.write(DEFAULT_V_ANGLE);
 
@@ -90,6 +93,7 @@ void setPosition(byte vertical, byte horizontal) {
 
 byte sonar(){
     int retval = 0;
+    retval = sonarr.ping_cm();
     return retval;
 }
 
@@ -201,12 +205,13 @@ int turnRobotParallel(float angle){
 */
 //------------------------------------------------------------------------//
 
-#define MOVETEST
+//#define MOVETEST
 //#define ROBOTTURNTEST
 //#define SETPOSITIONTEST
 //#define SERIALTEST
 #define DEBUG
-#define DRIVETEST
+//#define DRIVETEST
+#define DEMO
 #define BASIC_DELAY 2500
 
 void setPositionTest(byte vertical, byte horizontal) {
@@ -330,6 +335,10 @@ void loop() {
 
 #ifdef SERIALTEST
     interaction->proceed();
+#endif
+
+#ifdef DEMO
+    demo();
 #endif
 
 }
