@@ -65,6 +65,14 @@ def get_command(function_num, *args):
         command += byte_to_bytes(STOP_MOVEMENT)
         command += int_to_bytes(0)
         command += int_to_bytes(0)
+    elif function_num == BEEP:
+        command += byte_to_bytes(BEEP)
+        command += int_to_bytes(args[0])
+        command += int_to_bytes(0)
+    elif function_num == SONAR:
+        command += byte_to_bytes(SONAR)
+        command += int_to_bytes(0)
+        command += int_to_bytes(0)
 
     print(command)
     return command

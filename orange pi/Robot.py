@@ -66,6 +66,10 @@ class Robot:
         command = utilities.get_command(STOP_MOVEMENT)
         self.ser.write(command)
 
+    def beep(self, tone):
+        command = utilities.get_command(BEEP)
+        self.ser.write(command)
+
 
 
 
