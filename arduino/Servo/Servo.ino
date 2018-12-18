@@ -58,7 +58,7 @@ void setup() {
     Serial.write(1);
 
     servoHorizontal.attach(10);
-    servoVertical.attach(13);
+    servoVertical.attach(12);
     servoHorizontal.write(DEFAULT_H_ANGLE);
     servoVertical.write(DEFAULT_V_ANGLE);
 
