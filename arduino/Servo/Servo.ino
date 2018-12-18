@@ -58,7 +58,7 @@ void setup() {
     Serial.write(1);
 
     servoHorizontal.attach(10);
-    servoVertical.attach(11);
+    servoVertical.attach(13);
     servoHorizontal.write(DEFAULT_H_ANGLE);
     servoVertical.write(DEFAULT_V_ANGLE);
 
@@ -191,10 +191,10 @@ int turnRobotParallel(float angle){
 */
 //------------------------------------------------------------------------//
 
-//#define MOVETEST
+#define MOVETEST
 //#define ROBOTTURNTEST
 //#define SETPOSITIONTEST
-#define SERIALTEST
+//#define SERIALTEST
 #define DEBUG
 //#define DRIVETEST
 #define BASIC_DELAY 2500
