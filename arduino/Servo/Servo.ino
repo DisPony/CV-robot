@@ -209,7 +209,7 @@ int turnRobotParallel(float angle){
 //#define SERIALTEST
 #define DEBUG
 //#define DRIVETEST
-//#define DEMO
+#define DEMO
 #define BASIC_DELAY 2500
 
 void setPositionTest(byte vertical, byte horizontal) {
