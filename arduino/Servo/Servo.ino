@@ -96,14 +96,6 @@ void setPosition(byte vertical, byte horizontal) {
 }
 
 //------------------------------------------------------------------------//
-
-byte sonar(){
-    int retval = 0;
-    //retval = sonarr.ping_cm();
-    return retval;
-}
-
-//------------------------------------------------------------------------//
 /*
 // Functions turn camera on *angle*
 
@@ -302,7 +294,7 @@ byte SerialInteraction::proceed() {
                 retval = ResponsiveDualStepper::STOP_MOVEMENT;
                 break;
             case SONAR:
-                Serial.print(sonar());
+                Serial.print(sonar.ping_cm());
                 break;
             case BEEP:
                // tone(11 ,longFromByte(buf, 0), 750);
