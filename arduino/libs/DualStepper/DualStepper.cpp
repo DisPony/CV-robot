@@ -32,7 +32,7 @@
 
 
 DualStepper::DualStepper(byte maskPortD, byte maskPortB) {
-    this->stepsPerTurn = 4076;    // Количество шагов на один оборот внешнего вала на 360".
+    // Количество шагов на один оборот внешнего вала на 360".
     this->maskPortB = maskPortB;
     this->maskPortD = maskPortD;
     pinMode(9, OUTPUT);

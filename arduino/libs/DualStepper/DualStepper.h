@@ -1,14 +1,4 @@
 /*
-  Stepper_28BYJ.h - - Stepper_28BYJ library for Wiring/Arduino
-  Модифицированная библиотека для управления шаговым двигателем 28BYJ
-  
-  Original library     (0.1) by Tom Igoe.
-  //Two-wire modifications   (0.2) by Sebastian Gassner
-  Combination version   (0.3) by Tom Igoe and David Mellis
-  Bug fix for four-wire   (0.4) by Tom Igoe, bug fix from Noah Shibley
-  Модифицирована для 28BYJ - alex48 (www.alex48.110kpd.ru
-  
-
   Управленине униполярным шаговым двигателем подключенным по 4-х проводной схеме.
 
   Если подключать несколько шаговых двигателей к одному микроконтроллеру,
@@ -83,10 +73,7 @@ private:
     // Езда взад-вперед
     void stepMotorsOpposite(byte thisStep);
 
-    // количество шагов на 1 оборот
-    int stepsPerTurn;       
-    
-    // Битовые маски портов B и D (См. https://www.arduino.cc/en/Reference/PortManipulation) 
+    // Битовые маски портов B и D (См. https://www.arduino.cc/en/Reference/PortManipulation)
     // 1 - порт используется выводом двигателя, 0 - не используется.
     // Для дальнейшего развития библиотеки.
     byte maskPortB;
